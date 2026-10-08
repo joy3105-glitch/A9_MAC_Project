@@ -1,0 +1,14 @@
+__pycache__/
+*.pyc
+
+*.vcd
+*.out
+*.log
+
+results/mac_sim
+results/*.vcd
+
+*.swp
+*~
+
+.DS_Store
