@@ -1,184 +1,118 @@
-`timescale 1ns/1ps
 
+`timescale 1ns/1ps
 
 module mac_testbench;
 
-
-    // =====================================
-    // Signals
-    // =====================================
-
-    logic clk;
-
+    logic clk = 0;
     logic rst;
-
     logic signed [7:0] A;
-
     logic signed [7:0] B;
-
     logic valid_in;
-
     logic signed [7:0] Y;
-
     logic valid_out;
 
-
-    // =====================================
-    // DUT
-    // =====================================
+    integer errors = 0;
+    integer checks = 0;
 
     mac_baseline dut (
-
         .clk(clk),
-
         .rst(rst),
-
         .A(A),
-
         .B(B),
-
         .valid_in(valid_in),
-
         .Y(Y),
-
         .valid_out(valid_out)
-
     );
 
-
-    // =====================================
-    // Clock
-    // =====================================
+    always #5 clk = ~clk;
 
     initial begin
-
-        clk = 0;
-
-        forever #5 clk = ~clk;
-
+        $dumpfile("results/mac.vcd");
+        $dumpvars(0, mac_testbench);
     end
 
+    // Check after nonblocking assignments have updated outputs.
+    always @(posedge clk) begin
+        if (!rst && valid_in) begin
+            case ({A, B})
+                {8'sd20, 8'sd16}: begin
+                    #1;
+                    checks = checks + 1;
+                    if (valid_out !== 1'b1 || Y !== 8'sd20) begin
+                        $display("FAIL: Test 1, expected Y=20, got Y=%0d", Y);
+                        errors = errors + 1;
+                    end else begin
+                        $display("PASS: Test 1, Y=%0d", Y);
+                    end
+                end
 
-    // =====================================
-    // Waveform
-    // =====================================
+                {8'sd24, 8'sd8}: begin
+                    #1;
+                    checks = checks + 1;
+                    if (valid_out !== 1'b1 || Y !== 8'sd32) begin
+                        $display("FAIL: Test 2, expected Y=32, got Y=%0d", Y);
+                        errors = errors + 1;
+                    end else begin
+                        $display("PASS: Test 2, Y=%0d", Y);
+                    end
+                end
 
-    initial begin
+                {-8'sd16, 8'sd16}: begin
+                    #1;
+                    checks = checks + 1;
+                    if (valid_out !== 1'b1 || Y !== 8'sd16) begin
+                        $display("FAIL: Test 3, expected Y=16, got Y=%0d", Y);
+                        errors = errors + 1;
+                    end else begin
+                        $display("PASS: Test 3, Y=%0d", Y);
+                    end
+                end
 
-        $dumpfile(
-            "results/mac.vcd"
-        );
-
-        $dumpvars(
-            0,
-            mac_testbench
-        );
-
+                default: begin
+                    $display("INFO: Unlisted input A=%0d B=%0d", A, B);
+                end
+            endcase
+        end
     end
 
-
-    // =====================================
-    // Test sequence
-    // =====================================
-
     initial begin
-
-        // Initial values
-
         rst = 1;
-
         valid_in = 0;
-
         A = 0;
-
         B = 0;
 
-
-        // Reset
-
-        #20;
-
+        repeat (2) @(negedge clk);
         rst = 0;
 
-
-        // =================================
-        // Test 1
-        // A = 20 / 16 = 1.25
-        // B = 16 / 16 = 1.00
-        // Product = 1.25
-        // =================================
-
         @(negedge clk);
-
         A = 8'sd20;
-
         B = 8'sd16;
-
         valid_in = 1;
 
-
-        // =================================
-        // Test 2
-        // A = 24 / 16 = 1.5
-        // B = 8 / 16 = 0.5
-        // =================================
-
         @(negedge clk);
-
         A = 8'sd24;
-
         B = 8'sd8;
 
-
-        // =================================
-        // Test 3
-        // A = -16 / 16 = -1
-        // B = 16 / 16 = 1
-        // =================================
-
         @(negedge clk);
-
         A = -8'sd16;
-
         B = 8'sd16;
 
-
-        // Stop valid
-
         @(negedge clk);
-
         valid_in = 0;
+        A = 0;
+        B = 0;
 
+        repeat (2) @(negedge clk);
 
-        // Wait
+        $display("--------------------------------");
+        $display("Checks = %0d, Errors = %0d", checks, errors);
 
-        #50;
-
+        if (errors == 0 && checks == 3)
+            $display("RTL TEST RESULT: PASS");
+        else
+            $display("RTL TEST RESULT: FAIL");
 
         $finish;
-
     end
-
-
-    // =====================================
-    // Display
-    // =====================================
-
-    always @(posedge clk) begin
-
-        if (valid_out) begin
-
-            $display(
-                "TIME=%0t | A=%0d | B=%0d | Y=%0d",
-                $time,
-                A,
-                B,
-                Y
-            );
-
-        end
-
-    end
-
 
 endmodule

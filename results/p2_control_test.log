@@ -1,0 +1,6 @@
+--------------------------------
+PIPELINE CONTROL TEST P2
+Checks : 20
+Errors : 0
+CONTROL TEST: PASS
+tb/mac_pipeline_control_tb.sv:221: $finish called at 206000 (1ps)

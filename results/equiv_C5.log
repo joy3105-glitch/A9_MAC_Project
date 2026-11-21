@@ -1,0 +1,15 @@
+VCD info: dumpfile results/mac_python_equivalence.vcd opened for output.
+
+======================================
+RTL - PYTHON EQUIVALENCE VERIFICATION
+======================================
+INPUT_WIDTH : 16
+INPUT_FRAC  : 12
+ACC_WIDTH   : 35
+ACC_FRAC    : 24
+OUTPUT_WIDTH: 8
+OUTPUT_FRAC : 4
+Total vectors : 655
+Errors        : 0
+EQUIVALENCE RESULT: PASS
+tb/mac_python_equivalence_tb.sv:166: $finish called at 13120000 (1ps)

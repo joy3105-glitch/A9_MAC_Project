@@ -1,0 +1,13 @@
+========================================
+P2 PIPELINE STREAMING TEST
+Loaded vectors: 655
+Expected latency: 3 cycles
+Expected initiation interval: 1 cycle
+========================================
+----------------------------------------
+Vectors loaded : 655
+Output checks  : 655
+Errors         : 0
+P2 PIPELINE STREAMING TEST: PASS
+========================================
+tb/mac_pipeline2_stream_tb.sv:199: $finish called at 6596000 (1ps)

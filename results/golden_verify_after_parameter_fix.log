@@ -1,0 +1,171 @@
+INDEPENDENT MAC MODEL VERIFICATION
+=======================================================
+
+Test 1
+A                   = [1.25]
+B                   = [1.0]
+Floating result     = 1.250000
+Reference code      = 20
+Actual fixed code   = 20
+Fixed result        = 1.250000
+Absolute float error= 0.000000
+Output saturation   = NO
+Functional check    = PASS
+
+Test 2
+A                   = [1.25, 2.0]
+B                   = [2.0, 1.5]
+Floating result     = 5.500000
+Reference code      = 88
+Actual fixed code   = 88
+Fixed result        = 5.500000
+Absolute float error= 0.000000
+Output saturation   = NO
+Functional check    = PASS
+
+Test 3
+A                   = [1.0, -1.0]
+B                   = [2.0, 2.0]
+Floating result     = 0.000000
+Reference code      = 0
+Actual fixed code   = 0
+Fixed result        = 0.000000
+Absolute float error= 0.000000
+Output saturation   = NO
+Functional check    = PASS
+
+Test 4
+A                   = [3.0, 2.0, 1.0]
+B                   = [1.0, 2.0, 3.0]
+Floating result     = 10.000000
+Reference code      = 127
+Actual fixed code   = 127
+Fixed result        = 7.937500
+Absolute float error= 2.062500
+Output saturation   = YES
+Functional check    = PASS
+
+Test 5
+A                   = [7.9]
+B                   = [7.9]
+Floating result     = 62.410000
+Reference code      = 127
+Actual fixed code   = 127
+Fixed result        = 7.937500
+Absolute float error= 54.472500
+Output saturation   = YES
+Functional check    = PASS
+
+Test 6
+A                   = [-8.0]
+B                   = [7.9]
+Floating result     = -63.200000
+Reference code      = -128
+Actual fixed code   = -128
+Fixed result        = -8.000000
+Absolute float error= 55.200000
+Output saturation   = YES
+Functional check    = PASS
+
+Test 7
+A                   = []
+B                   = []
+Floating result     = 0.000000
+Reference code      = 0
+Actual fixed code   = 0
+Fixed result        = 0.000000
+Absolute float error= 0.000000
+Output saturation   = NO
+Functional check    = PASS
+
+Test 8
+A                   = [0.0625]
+B                   = [0.5]
+Floating result     = 0.031250
+Reference code      = 1
+Actual fixed code   = 1
+Fixed result        = 0.062500
+Absolute float error= 0.031250
+Output saturation   = NO
+Functional check    = PASS
+
+Test 9
+A                   = [-0.0625]
+B                   = [0.5]
+Floating result     = -0.031250
+Reference code      = -1
+Actual fixed code   = -1
+Fixed result        = -0.062500
+Absolute float error= 0.031250
+Output saturation   = NO
+Functional check    = PASS
+
+Test 10
+A                   = [0.03125]
+B                   = [1.0]
+Floating result     = 0.031250
+Reference code      = 1
+Actual fixed code   = 1
+Fixed result        = 0.062500
+Absolute float error= 0.031250
+Output saturation   = NO
+Functional check    = PASS
+
+Test 11
+A                   = [-0.03125]
+B                   = [1.0]
+Floating result     = -0.031250
+Reference code      = -1
+Actual fixed code   = -1
+Fixed result        = -0.062500
+Absolute float error= 0.031250
+Output saturation   = NO
+Functional check    = PASS
+
+Test 12
+A                   = [8.0]
+B                   = [1.0]
+Floating result     = 8.000000
+Reference code      = 127
+Actual fixed code   = 127
+Fixed result        = 7.937500
+Absolute float error= 0.062500
+Output saturation   = YES
+Functional check    = PASS
+
+Test 13
+A                   = [-8.5]
+B                   = [1.0]
+Floating result     = -8.500000
+Reference code      = -128
+Actual fixed code   = -128
+Fixed result        = -8.000000
+Absolute float error= 0.500000
+Output saturation   = YES
+Functional check    = PASS
+
+Test 14
+A                   = [7.96875]
+B                   = [1.0]
+Floating result     = 7.968750
+Reference code      = 127
+Actual fixed code   = 127
+Fixed result        = 7.937500
+Absolute float error= 0.031250
+Output saturation   = YES
+Functional check    = PASS
+
+Test 15
+A                   = [-8.03125]
+B                   = [1.0]
+Floating result     = -8.031250
+Reference code      = -128
+Actual fixed code   = -128
+Fixed result        = -8.000000
+Absolute float error= 0.031250
+Output saturation   = YES
+Functional check    = PASS
+
+=======================================================
+Overall verification: PASS
+This verifies Python fixed-point behavior, not RTL.

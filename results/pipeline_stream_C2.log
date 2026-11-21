@@ -1,0 +1,11 @@
+========================================
+P1 PIPELINE STREAMING TEST
+Loaded vectors: 655
+========================================
+----------------------------------------
+Vectors loaded : 655
+Output checks  : 655
+Errors         : 0
+PIPELINE STREAMING TEST: PASS
+========================================
+tb/mac_pipeline_stream_tb.sv:184: $finish called at 6586000 (1ps)

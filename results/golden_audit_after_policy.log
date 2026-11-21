@@ -1,0 +1,27 @@
+PASS baseline validation: True
+PASS input max: 127
+PASS input min: -128
+PASS positive input saturation: 127
+PASS negative input saturation: -128
+PASS positive quantization tie: 1
+PASS negative quantization tie: -1
+PASS rescale Q8->Q4 8: 1
+PASS rescale Q8->Q4 -8: -1
+PASS rescale Q8->Q4 7: 0
+PASS rescale Q8->Q4 -7: 0
+PASS rescale Q8->Q4 4: 0
+PASS rescale Q8->Q4 -4: 0
+PASS rescale left positive: 112
+PASS rescale left negative: -112
+PASS wrap positive: -128
+PASS wrap negative: 127
+PASS empty dot product: 0
+PASS simple positive MAC: 16
+PASS simple negative MAC: -16
+PASS float reference: 11.0
+PASS F input_frac=2: 4
+PASS F input_frac=3: 4
+PASS F input_frac=4: 4
+PASS F input_frac=5: 4
+PASS F input_frac=6: 4
+GOLDEN AUDIT PASS: 26 checks

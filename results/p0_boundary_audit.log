@@ -1,0 +1,19 @@
+==================================
+MAC BOUNDARY TEST
+==================================
+PASS Test 1: Reset
+PASS Test 2: Y=20, valid_out=1
+PASS Test 3: Y=20, valid_out=0
+PASS Test 4: Y=36, valid_out=1
+PASS Test 5: Y=16, valid_out=1
+PASS Test 6: Y=16, valid_out=0
+PASS Test 7: Y=16, valid_out=1
+PASS Test 8: Y=127, valid_out=1
+PASS Test 9: Y=112, valid_out=1
+PASS Test 10: Y=-128, valid_out=1
+PASS Test 11: Y=-112, valid_out=1
+----------------------------------
+Checks : 11
+Errors : 0
+BOUNDARY TEST RESULT: PASS
+tb/mac_boundary_tb.sv:154: $finish called at 116 (1s)

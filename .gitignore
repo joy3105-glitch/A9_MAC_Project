@@ -1,14 +1,40 @@
+# Python
 __pycache__/
 *.pyc
+.venv/
 
-*.vcd
-*.out
-*.log
-
-results/mac_sim
-results/*.vcd
-
+# Editor / OS
 *.swp
 *~
-
 .DS_Store
+*:Zone.Identifier
+
+# Backup
+backup/
+archive/
+
+# Simulation generated files
+*.vvp
+*.vcd
+*.out
+*.blif
+
+# Generated simulation executables
+results/mac_sim
+results/mac_sim_sv
+results/mac_*_sim
+results/mac_equiv_C*
+results/mac_pipeline_equiv_C*
+results/mac_pipeline_compile
+results/pipeline_stream_C*
+
+# Temporary synthesis experiments
+results/abc_*
+results/blif_P0_C2.log
+
+# Logs outside results are ignored
+*.log
+
+# Keep experiment evidence logs
+!results/
+!results/*.log

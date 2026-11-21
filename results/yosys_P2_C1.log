@@ -1,0 +1,753 @@
+
+ /----------------------------------------------------------------------------\
+ |                                                                            |
+ |  yosys -- Yosys Open SYnthesis Suite                                       |
+ |                                                                            |
+ |  Copyright (C) 2012 - 2020  Claire Xenia Wolf <claire@yosyshq.com>         |
+ |                                                                            |
+ |  Permission to use, copy, modify, and/or distribute this software for any  |
+ |  purpose with or without fee is hereby granted, provided that the above    |
+ |  copyright notice and this permission notice appear in all copies.         |
+ |                                                                            |
+ |  THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES  |
+ |  WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF          |
+ |  MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR   |
+ |  ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES    |
+ |  WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN     |
+ |  ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF   |
+ |  OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.            |
+ |                                                                            |
+ \----------------------------------------------------------------------------/
+
+ Yosys 0.33 (git sha1 2584903a060)
+
+
+-- Running command `
+read_verilog -sv rtl/mac_pipeline2.sv
+chparam -set INPUT_WIDTH 6         -set INPUT_FRAC 2         -set ACC_WIDTH 15         -set ACC_FRAC 4         -set OUTPUT_WIDTH 8         -set OUTPUT_FRAC 4 mac_pipeline2
+hierarchy -top mac_pipeline2
+synth -top mac_pipeline2
+stat
+' --
+
+1. Executing Verilog-2005 frontend: rtl/mac_pipeline2.sv
+Parsing SystemVerilog input from `rtl/mac_pipeline2.sv' to AST representation.
+Generating RTLIL representation for module `\mac_pipeline2'.
+Successfully finished Verilog frontend.
+Parameter \INPUT_WIDTH = 6
+Parameter \INPUT_FRAC = 2
+Parameter \ACC_WIDTH = 15
+Parameter \ACC_FRAC = 4
+Parameter \OUTPUT_WIDTH = 8
+Parameter \OUTPUT_FRAC = 4
+
+2. Executing AST frontend in derive mode using pre-parsed AST for module `\mac_pipeline2'.
+Parameter \INPUT_WIDTH = 6
+Parameter \INPUT_FRAC = 2
+Parameter \ACC_WIDTH = 15
+Parameter \ACC_FRAC = 4
+Parameter \OUTPUT_WIDTH = 8
+Parameter \OUTPUT_FRAC = 4
+Generating RTLIL representation for module `$paramod$c0ff471b8286456aee79808fc922f4f7fd73eed9\mac_pipeline2'.
+
+3. Executing HIERARCHY pass (managing design hierarchy).
+
+3.1. Analyzing design hierarchy..
+Top module:  \mac_pipeline2
+
+3.2. Analyzing design hierarchy..
+Top module:  \mac_pipeline2
+Removed 0 unused modules.
+
+4. Executing SYNTH pass.
+
+4.1. Executing HIERARCHY pass (managing design hierarchy).
+
+4.1.1. Analyzing design hierarchy..
+Top module:  \mac_pipeline2
+
+4.1.2. Analyzing design hierarchy..
+Top module:  \mac_pipeline2
+Removed 0 unused modules.
+
+4.2. Executing PROC pass (convert processes to netlists).
+
+4.2.1. Executing PROC_CLEAN pass (remove empty switches from decision trees).
+Found and cleaned up 2 empty switches in `\mac_pipeline2.$proc$rtl/mac_pipeline2.sv:0$36'.
+Found and cleaned up 2 empty switches in `\mac_pipeline2.$proc$rtl/mac_pipeline2.sv:0$46'.
+Cleaned up 4 empty switches.
+
+4.2.2. Executing PROC_RMDEAD pass (remove dead branches from decision trees).
+Marked 3 switch rules as full_case in process $proc$rtl/mac_pipeline2.sv:0$42 in module mac_pipeline2.
+Marked 2 switch rules as full_case in process $proc$rtl/mac_pipeline2.sv:0$46 in module mac_pipeline2.
+Marked 2 switch rules as full_case in process $proc$rtl/mac_pipeline2.sv:204$53 in module mac_pipeline2.
+Removed a total of 0 dead cases.
+
+4.2.3. Executing PROC_PRUNE pass (remove redundant assignments in processes).
+Removed 8 redundant assignments.
+Promoted 16 assignments to connections.
+
+4.2.4. Executing PROC_INIT pass (extract init attributes).
+
+4.2.5. Executing PROC_ARST pass (detect async resets in processes).
+
+4.2.6. Executing PROC_ROM pass (convert switches to ROMs).
+Converted 0 switches.
+<suppressed ~8 debug messages>
+
+4.2.7. Executing PROC_MUX pass (convert decision trees to multiplexers).
+Creating decoders for process `\mac_pipeline2.$proc$rtl/mac_pipeline2.sv:0$36'.
+Creating decoders for process `\mac_pipeline2.$proc$rtl/mac_pipeline2.sv:0$42'.
+     1/3: $2\acc_next[14:0]
+     2/3: $1\acc_next[14:0]
+     3/3: $1\acc_base_ext[16:0]
+Creating decoders for process `\mac_pipeline2.$proc$rtl/mac_pipeline2.sv:0$46'.
+     1/2: $2\y_next[7:0]
+     2/2: $1\y_next[7:0]
+Creating decoders for process `\mac_pipeline2.$proc$rtl/mac_pipeline2.sv:204$53'.
+     1/10: $0\valid_out[0:0]
+     2/10: $0\clear_stage2[0:0]
+     3/10: $0\valid_stage2[0:0]
+     4/10: $0\product_scaled_reg[16:0]
+     5/10: $0\clear_stage1[0:0]
+     6/10: $0\valid_stage1[0:0]
+     7/10: $0\b_reg[5:0]
+     8/10: $0\a_reg[5:0]
+     9/10: $0\accumulator[14:0]
+    10/10: $0\Y[7:0]
+
+4.2.8. Executing PROC_DLATCH pass (convert process syncs to latches).
+No latch inferred for signal `\mac_pipeline2.\product' from process `\mac_pipeline2.$proc$rtl/mac_pipeline2.sv:0$36'.
+No latch inferred for signal `\mac_pipeline2.\product_ext' from process `\mac_pipeline2.$proc$rtl/mac_pipeline2.sv:0$36'.
+No latch inferred for signal `\mac_pipeline2.\product_scaled' from process `\mac_pipeline2.$proc$rtl/mac_pipeline2.sv:0$36'.
+No latch inferred for signal `\mac_pipeline2.\rescale_fixed$func$rtl/mac_pipeline2.sv:146$34.$result' from process `\mac_pipeline2.$proc$rtl/mac_pipeline2.sv:0$36'.
+No latch inferred for signal `\mac_pipeline2.\rescale_fixed$func$rtl/mac_pipeline2.sv:146$34.value' from process `\mac_pipeline2.$proc$rtl/mac_pipeline2.sv:0$36'.
+No latch inferred for signal `\mac_pipeline2.\acc_base_ext' from process `\mac_pipeline2.$proc$rtl/mac_pipeline2.sv:0$42'.
+No latch inferred for signal `\mac_pipeline2.\sum_ext' from process `\mac_pipeline2.$proc$rtl/mac_pipeline2.sv:0$42'.
+No latch inferred for signal `\mac_pipeline2.\acc_next' from process `\mac_pipeline2.$proc$rtl/mac_pipeline2.sv:0$42'.
+No latch inferred for signal `\mac_pipeline2.\output_scaled' from process `\mac_pipeline2.$proc$rtl/mac_pipeline2.sv:0$46'.
+No latch inferred for signal `\mac_pipeline2.\y_next' from process `\mac_pipeline2.$proc$rtl/mac_pipeline2.sv:0$46'.
+No latch inferred for signal `\mac_pipeline2.\rescale_fixed$func$rtl/mac_pipeline2.sv:185$35.$result' from process `\mac_pipeline2.$proc$rtl/mac_pipeline2.sv:0$46'.
+No latch inferred for signal `\mac_pipeline2.\rescale_fixed$func$rtl/mac_pipeline2.sv:185$35.value' from process `\mac_pipeline2.$proc$rtl/mac_pipeline2.sv:0$46'.
+
+4.2.9. Executing PROC_DFF pass (convert process syncs to FFs).
+Creating register for signal `\mac_pipeline2.\Y' using process `\mac_pipeline2.$proc$rtl/mac_pipeline2.sv:204$53'.
+  created $dff cell `$procdff$113' with positive edge clock.
+Creating register for signal `\mac_pipeline2.\valid_out' using process `\mac_pipeline2.$proc$rtl/mac_pipeline2.sv:204$53'.
+  created $dff cell `$procdff$114' with positive edge clock.
+Creating register for signal `\mac_pipeline2.\a_reg' using process `\mac_pipeline2.$proc$rtl/mac_pipeline2.sv:204$53'.
+  created $dff cell `$procdff$115' with positive edge clock.
+Creating register for signal `\mac_pipeline2.\b_reg' using process `\mac_pipeline2.$proc$rtl/mac_pipeline2.sv:204$53'.
+  created $dff cell `$procdff$116' with positive edge clock.
+Creating register for signal `\mac_pipeline2.\valid_stage1' using process `\mac_pipeline2.$proc$rtl/mac_pipeline2.sv:204$53'.
+  created $dff cell `$procdff$117' with positive edge clock.
+Creating register for signal `\mac_pipeline2.\clear_stage1' using process `\mac_pipeline2.$proc$rtl/mac_pipeline2.sv:204$53'.
+  created $dff cell `$procdff$118' with positive edge clock.
+Creating register for signal `\mac_pipeline2.\product_scaled_reg' using process `\mac_pipeline2.$proc$rtl/mac_pipeline2.sv:204$53'.
+  created $dff cell `$procdff$119' with positive edge clock.
+Creating register for signal `\mac_pipeline2.\valid_stage2' using process `\mac_pipeline2.$proc$rtl/mac_pipeline2.sv:204$53'.
+  created $dff cell `$procdff$120' with positive edge clock.
+Creating register for signal `\mac_pipeline2.\clear_stage2' using process `\mac_pipeline2.$proc$rtl/mac_pipeline2.sv:204$53'.
+  created $dff cell `$procdff$121' with positive edge clock.
+Creating register for signal `\mac_pipeline2.\accumulator' using process `\mac_pipeline2.$proc$rtl/mac_pipeline2.sv:204$53'.
+  created $dff cell `$procdff$122' with positive edge clock.
+
+4.2.10. Executing PROC_MEMWR pass (convert process memory writes to cells).
+
+4.2.11. Executing PROC_CLEAN pass (remove empty switches from decision trees).
+Removing empty process `mac_pipeline2.$proc$rtl/mac_pipeline2.sv:0$36'.
+Found and cleaned up 3 empty switches in `\mac_pipeline2.$proc$rtl/mac_pipeline2.sv:0$42'.
+Removing empty process `mac_pipeline2.$proc$rtl/mac_pipeline2.sv:0$42'.
+Found and cleaned up 2 empty switches in `\mac_pipeline2.$proc$rtl/mac_pipeline2.sv:0$46'.
+Removing empty process `mac_pipeline2.$proc$rtl/mac_pipeline2.sv:0$46'.
+Found and cleaned up 3 empty switches in `\mac_pipeline2.$proc$rtl/mac_pipeline2.sv:204$53'.
+Removing empty process `mac_pipeline2.$proc$rtl/mac_pipeline2.sv:204$53'.
+Cleaned up 8 empty switches.
+
+4.2.12. Executing OPT_EXPR pass (perform const folding).
+Optimizing module mac_pipeline2.
+
+4.3. Executing OPT_EXPR pass (perform const folding).
+Optimizing module mac_pipeline2.
+
+4.4. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \mac_pipeline2..
+Removed 0 unused cells and 62 unused wires.
+<suppressed ~5 debug messages>
+
+4.5. Executing CHECK pass (checking for obvious problems).
+Checking module mac_pipeline2...
+Found and reported 0 problems.
+
+4.6. Executing OPT pass (performing simple optimizations).
+
+4.6.1. Executing OPT_EXPR pass (perform const folding).
+Optimizing module mac_pipeline2.
+
+4.6.2. Executing OPT_MERGE pass (detect identical cells).
+Finding identical cells in module `\mac_pipeline2'.
+Removed a total of 0 cells.
+
+4.6.3. Executing OPT_MUXTREE pass (detect dead branches in mux trees).
+Running muxtree optimizer on module \mac_pipeline2..
+  Creating internal representation of mux trees.
+  Evaluating internal representation of mux trees.
+  Analyzing evaluation results.
+    dead port 1/2 on $mux $procmux$58.
+    dead port 1/2 on $mux $procmux$70.
+Removed 2 multiplexer ports.
+<suppressed ~12 debug messages>
+
+4.6.4. Executing OPT_REDUCE pass (consolidate $*mux and $reduce_* inputs).
+  Optimizing cells in module \mac_pipeline2.
+Performed a total of 0 changes.
+
+4.6.5. Executing OPT_MERGE pass (detect identical cells).
+Finding identical cells in module `\mac_pipeline2'.
+Removed a total of 0 cells.
+
+4.6.6. Executing OPT_DFF pass (perform DFF optimizations).
+
+4.6.7. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \mac_pipeline2..
+Removed 0 unused cells and 2 unused wires.
+<suppressed ~1 debug messages>
+
+4.6.8. Executing OPT_EXPR pass (perform const folding).
+Optimizing module mac_pipeline2.
+
+4.6.9. Rerunning OPT passes. (Maybe there is more to do..)
+
+4.6.10. Executing OPT_MUXTREE pass (detect dead branches in mux trees).
+Running muxtree optimizer on module \mac_pipeline2..
+  Creating internal representation of mux trees.
+  Evaluating internal representation of mux trees.
+  Analyzing evaluation results.
+Removed 0 multiplexer ports.
+<suppressed ~12 debug messages>
+
+4.6.11. Executing OPT_REDUCE pass (consolidate $*mux and $reduce_* inputs).
+  Optimizing cells in module \mac_pipeline2.
+Performed a total of 0 changes.
+
+4.6.12. Executing OPT_MERGE pass (detect identical cells).
+Finding identical cells in module `\mac_pipeline2'.
+Removed a total of 0 cells.
+
+4.6.13. Executing OPT_DFF pass (perform DFF optimizations).
+
+4.6.14. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \mac_pipeline2..
+
+4.6.15. Executing OPT_EXPR pass (perform const folding).
+Optimizing module mac_pipeline2.
+
+4.6.16. Finished OPT passes. (There is nothing left to do.)
+
+4.7. Executing FSM pass (extract and optimize FSM).
+
+4.7.1. Executing FSM_DETECT pass (finding FSMs in design).
+
+4.7.2. Executing FSM_EXTRACT pass (extracting FSM from design).
+
+4.7.3. Executing FSM_OPT pass (simple optimizations of FSMs).
+
+4.7.4. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \mac_pipeline2..
+
+4.7.5. Executing FSM_OPT pass (simple optimizations of FSMs).
+
+4.7.6. Executing FSM_RECODE pass (re-assigning FSM state encoding).
+
+4.7.7. Executing FSM_INFO pass (dumping all available information on FSM cells).
+
+4.7.8. Executing FSM_MAP pass (mapping FSMs to basic logic).
+
+4.8. Executing OPT pass (performing simple optimizations).
+
+4.8.1. Executing OPT_EXPR pass (perform const folding).
+Optimizing module mac_pipeline2.
+
+4.8.2. Executing OPT_MERGE pass (detect identical cells).
+Finding identical cells in module `\mac_pipeline2'.
+Removed a total of 0 cells.
+
+4.8.3. Executing OPT_MUXTREE pass (detect dead branches in mux trees).
+Running muxtree optimizer on module \mac_pipeline2..
+  Creating internal representation of mux trees.
+  Evaluating internal representation of mux trees.
+  Analyzing evaluation results.
+Removed 0 multiplexer ports.
+<suppressed ~12 debug messages>
+
+4.8.4. Executing OPT_REDUCE pass (consolidate $*mux and $reduce_* inputs).
+  Optimizing cells in module \mac_pipeline2.
+Performed a total of 0 changes.
+
+4.8.5. Executing OPT_MERGE pass (detect identical cells).
+Finding identical cells in module `\mac_pipeline2'.
+Removed a total of 0 cells.
+
+4.8.6. Executing OPT_DFF pass (perform DFF optimizations).
+Adding SRST signal on $procdff$122 ($dff) from module mac_pipeline2 (D = $procmux$102_Y, Q = \accumulator, rval = 15'000000000000000).
+Adding EN signal on $auto$ff.cc:266:slice$123 ($sdff) from module mac_pipeline2 (D = $procmux$102_Y, Q = \accumulator).
+Adding SRST signal on $procdff$121 ($dff) from module mac_pipeline2 (D = \clear_stage1, Q = \clear_stage2, rval = 1'0).
+Adding SRST signal on $procdff$120 ($dff) from module mac_pipeline2 (D = \valid_stage1, Q = \valid_stage2, rval = 1'0).
+Adding SRST signal on $procdff$119 ($dff) from module mac_pipeline2 (D = { \product [11] \product [11] \product [11] \product [11] \product [11] \product }, Q = \product_scaled_reg, rval = 17'00000000000000000).
+Adding SRST signal on $procdff$118 ($dff) from module mac_pipeline2 (D = \clear_acc, Q = \clear_stage1, rval = 1'0).
+Adding SRST signal on $procdff$117 ($dff) from module mac_pipeline2 (D = \valid_in, Q = \valid_stage1, rval = 1'0).
+Adding SRST signal on $procdff$116 ($dff) from module mac_pipeline2 (D = \B, Q = \b_reg, rval = 6'000000).
+Adding SRST signal on $procdff$115 ($dff) from module mac_pipeline2 (D = \A, Q = \a_reg, rval = 6'000000).
+Adding SRST signal on $procdff$114 ($dff) from module mac_pipeline2 (D = \valid_stage2, Q = \valid_out, rval = 1'0).
+Adding SRST signal on $procdff$113 ($dff) from module mac_pipeline2 (D = $procmux$108_Y, Q = \Y, rval = 8'00000000).
+Adding EN signal on $auto$ff.cc:266:slice$135 ($sdff) from module mac_pipeline2 (D = \y_next, Q = \Y).
+
+4.8.7. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \mac_pipeline2..
+Removed 11 unused cells and 11 unused wires.
+<suppressed ~12 debug messages>
+
+4.8.8. Executing OPT_EXPR pass (perform const folding).
+Optimizing module mac_pipeline2.
+<suppressed ~1 debug messages>
+
+4.8.9. Rerunning OPT passes. (Maybe there is more to do..)
+
+4.8.10. Executing OPT_MUXTREE pass (detect dead branches in mux trees).
+Running muxtree optimizer on module \mac_pipeline2..
+  Creating internal representation of mux trees.
+  Evaluating internal representation of mux trees.
+  Analyzing evaluation results.
+Removed 0 multiplexer ports.
+<suppressed ~4 debug messages>
+
+4.8.11. Executing OPT_REDUCE pass (consolidate $*mux and $reduce_* inputs).
+  Optimizing cells in module \mac_pipeline2.
+Performed a total of 0 changes.
+
+4.8.12. Executing OPT_MERGE pass (detect identical cells).
+Finding identical cells in module `\mac_pipeline2'.
+Removed a total of 0 cells.
+
+4.8.13. Executing OPT_DFF pass (perform DFF optimizations).
+
+4.8.14. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \mac_pipeline2..
+
+4.8.15. Executing OPT_EXPR pass (perform const folding).
+Optimizing module mac_pipeline2.
+
+4.8.16. Finished OPT passes. (There is nothing left to do.)
+
+4.9. Executing WREDUCE pass (reducing word size of cells).
+Removed top 5 bits (of 17) from FF cell mac_pipeline2.$auto$ff.cc:266:slice$129 ($sdff).
+Removed top 5 bits (of 17) from port B of cell mac_pipeline2.$add$rtl/mac_pipeline2.sv:169$43 ($add).
+Removed top 2 bits (of 17) from port B of cell mac_pipeline2.$gt$rtl/mac_pipeline2.sv:171$44 ($gt).
+Removed top 2 bits (of 17) from port B of cell mac_pipeline2.$lt$rtl/mac_pipeline2.sv:173$45 ($lt).
+Removed top 2 bits (of 17) from port A of cell mac_pipeline2.$gt$rtl/mac_pipeline2.sv:191$51 ($gt).
+Removed top 9 bits (of 17) from port B of cell mac_pipeline2.$gt$rtl/mac_pipeline2.sv:191$51 ($gt).
+Removed top 2 bits (of 17) from port A of cell mac_pipeline2.$lt$rtl/mac_pipeline2.sv:193$52 ($lt).
+Removed top 9 bits (of 17) from port B of cell mac_pipeline2.$lt$rtl/mac_pipeline2.sv:193$52 ($lt).
+
+4.10. Executing PEEPOPT pass (run peephole optimizers).
+
+4.11. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \mac_pipeline2..
+
+4.12. Executing ALUMACC pass (create $alu and $macc cells).
+Extracting $alu and $macc cells in module mac_pipeline2:
+  creating $macc model for $add$rtl/mac_pipeline2.sv:169$43 ($add).
+  creating $macc model for $mul$rtl/mac_pipeline2.sv:139$39 ($mul).
+  creating $alu model for $macc $add$rtl/mac_pipeline2.sv:169$43.
+  creating $macc cell for $mul$rtl/mac_pipeline2.sv:139$39: $auto$alumacc.cc:365:replace_macc$137
+  creating $alu model for $gt$rtl/mac_pipeline2.sv:171$44 ($gt): new $alu
+  creating $alu model for $gt$rtl/mac_pipeline2.sv:191$51 ($gt): new $alu
+  creating $alu model for $lt$rtl/mac_pipeline2.sv:173$45 ($lt): new $alu
+  creating $alu model for $lt$rtl/mac_pipeline2.sv:193$52 ($lt): new $alu
+  creating $alu cell for $lt$rtl/mac_pipeline2.sv:193$52: $auto$alumacc.cc:485:replace_alu$142
+  creating $alu cell for $lt$rtl/mac_pipeline2.sv:173$45: $auto$alumacc.cc:485:replace_alu$155
+  creating $alu cell for $gt$rtl/mac_pipeline2.sv:191$51: $auto$alumacc.cc:485:replace_alu$168
+  creating $alu cell for $gt$rtl/mac_pipeline2.sv:171$44: $auto$alumacc.cc:485:replace_alu$175
+  creating $alu cell for $add$rtl/mac_pipeline2.sv:169$43: $auto$alumacc.cc:485:replace_alu$182
+  created 5 $alu and 1 $macc cells.
+
+4.13. Executing SHARE pass (SAT-based resource sharing).
+
+4.14. Executing OPT pass (performing simple optimizations).
+
+4.14.1. Executing OPT_EXPR pass (perform const folding).
+Optimizing module mac_pipeline2.
+<suppressed ~2 debug messages>
+
+4.14.2. Executing OPT_MERGE pass (detect identical cells).
+Finding identical cells in module `\mac_pipeline2'.
+Removed a total of 0 cells.
+
+4.14.3. Executing OPT_MUXTREE pass (detect dead branches in mux trees).
+Running muxtree optimizer on module \mac_pipeline2..
+  Creating internal representation of mux trees.
+  Evaluating internal representation of mux trees.
+  Analyzing evaluation results.
+Removed 0 multiplexer ports.
+<suppressed ~4 debug messages>
+
+4.14.4. Executing OPT_REDUCE pass (consolidate $*mux and $reduce_* inputs).
+  Optimizing cells in module \mac_pipeline2.
+Performed a total of 0 changes.
+
+4.14.5. Executing OPT_MERGE pass (detect identical cells).
+Finding identical cells in module `\mac_pipeline2'.
+Removed a total of 0 cells.
+
+4.14.6. Executing OPT_DFF pass (perform DFF optimizations).
+
+4.14.7. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \mac_pipeline2..
+Removed 2 unused cells and 6 unused wires.
+<suppressed ~3 debug messages>
+
+4.14.8. Executing OPT_EXPR pass (perform const folding).
+Optimizing module mac_pipeline2.
+
+4.14.9. Rerunning OPT passes. (Maybe there is more to do..)
+
+4.14.10. Executing OPT_MUXTREE pass (detect dead branches in mux trees).
+Running muxtree optimizer on module \mac_pipeline2..
+  Creating internal representation of mux trees.
+  Evaluating internal representation of mux trees.
+  Analyzing evaluation results.
+Removed 0 multiplexer ports.
+<suppressed ~4 debug messages>
+
+4.14.11. Executing OPT_REDUCE pass (consolidate $*mux and $reduce_* inputs).
+  Optimizing cells in module \mac_pipeline2.
+Performed a total of 0 changes.
+
+4.14.12. Executing OPT_MERGE pass (detect identical cells).
+Finding identical cells in module `\mac_pipeline2'.
+Removed a total of 0 cells.
+
+4.14.13. Executing OPT_DFF pass (perform DFF optimizations).
+
+4.14.14. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \mac_pipeline2..
+
+4.14.15. Executing OPT_EXPR pass (perform const folding).
+Optimizing module mac_pipeline2.
+
+4.14.16. Finished OPT passes. (There is nothing left to do.)
+
+4.15. Executing MEMORY pass.
+
+4.15.1. Executing OPT_MEM pass (optimize memories).
+Performed a total of 0 transformations.
+
+4.15.2. Executing OPT_MEM_PRIORITY pass (removing unnecessary memory write priority relations).
+Performed a total of 0 transformations.
+
+4.15.3. Executing OPT_MEM_FEEDBACK pass (finding memory read-to-write feedback paths).
+
+4.15.4. Executing MEMORY_BMUX2ROM pass (converting muxes to ROMs).
+
+4.15.5. Executing MEMORY_DFF pass (merging $dff cells to $memrd).
+
+4.15.6. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \mac_pipeline2..
+
+4.15.7. Executing MEMORY_SHARE pass (consolidating $memrd/$memwr cells).
+
+4.15.8. Executing OPT_MEM_WIDEN pass (optimize memories where all ports are wide).
+Performed a total of 0 transformations.
+
+4.15.9. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \mac_pipeline2..
+
+4.15.10. Executing MEMORY_COLLECT pass (generating $mem cells).
+
+4.16. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \mac_pipeline2..
+
+4.17. Executing OPT pass (performing simple optimizations).
+
+4.17.1. Executing OPT_EXPR pass (perform const folding).
+Optimizing module mac_pipeline2.
+<suppressed ~3 debug messages>
+
+4.17.2. Executing OPT_MERGE pass (detect identical cells).
+Finding identical cells in module `\mac_pipeline2'.
+Removed a total of 0 cells.
+
+4.17.3. Executing OPT_DFF pass (perform DFF optimizations).
+
+4.17.4. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \mac_pipeline2..
+Removed 21 unused cells and 22 unused wires.
+<suppressed ~22 debug messages>
+
+4.17.5. Finished fast OPT passes.
+
+4.18. Executing MEMORY_MAP pass (converting memories to logic and flip-flops).
+
+4.19. Executing OPT pass (performing simple optimizations).
+
+4.19.1. Executing OPT_EXPR pass (perform const folding).
+Optimizing module mac_pipeline2.
+
+4.19.2. Executing OPT_MERGE pass (detect identical cells).
+Finding identical cells in module `\mac_pipeline2'.
+Removed a total of 0 cells.
+
+4.19.3. Executing OPT_MUXTREE pass (detect dead branches in mux trees).
+Running muxtree optimizer on module \mac_pipeline2..
+  Creating internal representation of mux trees.
+  Evaluating internal representation of mux trees.
+  Analyzing evaluation results.
+Removed 0 multiplexer ports.
+<suppressed ~4 debug messages>
+
+4.19.4. Executing OPT_REDUCE pass (consolidate $*mux and $reduce_* inputs).
+  Optimizing cells in module \mac_pipeline2.
+    Consolidated identical input bits for $mux cell $procmux$64:
+      Old ports: A={ \accumulator [14] \accumulator [14] \accumulator }, B=17'00000000000000000, Y=\acc_base_ext
+      New ports: A=\accumulator, B=15'000000000000000, Y=\acc_base_ext [14:0]
+      New connections: \acc_base_ext [16:15] = { \acc_base_ext [14] \acc_base_ext [14] }
+  Optimizing cells in module \mac_pipeline2.
+Performed a total of 1 changes.
+
+4.19.5. Executing OPT_MERGE pass (detect identical cells).
+Finding identical cells in module `\mac_pipeline2'.
+Removed a total of 0 cells.
+
+4.19.6. Executing OPT_SHARE pass.
+
+4.19.7. Executing OPT_DFF pass (perform DFF optimizations).
+
+4.19.8. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \mac_pipeline2..
+
+4.19.9. Executing OPT_EXPR pass (perform const folding).
+Optimizing module mac_pipeline2.
+
+4.19.10. Rerunning OPT passes. (Maybe there is more to do..)
+
+4.19.11. Executing OPT_MUXTREE pass (detect dead branches in mux trees).
+Running muxtree optimizer on module \mac_pipeline2..
+  Creating internal representation of mux trees.
+  Evaluating internal representation of mux trees.
+  Analyzing evaluation results.
+Removed 0 multiplexer ports.
+<suppressed ~4 debug messages>
+
+4.19.12. Executing OPT_REDUCE pass (consolidate $*mux and $reduce_* inputs).
+  Optimizing cells in module \mac_pipeline2.
+Performed a total of 0 changes.
+
+4.19.13. Executing OPT_MERGE pass (detect identical cells).
+Finding identical cells in module `\mac_pipeline2'.
+Removed a total of 0 cells.
+
+4.19.14. Executing OPT_SHARE pass.
+
+4.19.15. Executing OPT_DFF pass (perform DFF optimizations).
+
+4.19.16. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \mac_pipeline2..
+
+4.19.17. Executing OPT_EXPR pass (perform const folding).
+Optimizing module mac_pipeline2.
+
+4.19.18. Finished OPT passes. (There is nothing left to do.)
+
+4.20. Executing TECHMAP pass (map to technology primitives).
+
+4.20.1. Executing Verilog-2005 frontend: /usr/bin/../share/yosys/techmap.v
+Parsing Verilog input from `/usr/bin/../share/yosys/techmap.v' to AST representation.
+Generating RTLIL representation for module `\_90_simplemap_bool_ops'.
+Generating RTLIL representation for module `\_90_simplemap_reduce_ops'.
+Generating RTLIL representation for module `\_90_simplemap_logic_ops'.
+Generating RTLIL representation for module `\_90_simplemap_compare_ops'.
+Generating RTLIL representation for module `\_90_simplemap_various'.
+Generating RTLIL representation for module `\_90_simplemap_registers'.
+Generating RTLIL representation for module `\_90_shift_ops_shr_shl_sshl_sshr'.
+Generating RTLIL representation for module `\_90_shift_shiftx'.
+Generating RTLIL representation for module `\_90_fa'.
+Generating RTLIL representation for module `\_90_lcu'.
+Generating RTLIL representation for module `\_90_alu'.
+Generating RTLIL representation for module `\_90_macc'.
+Generating RTLIL representation for module `\_90_alumacc'.
+Generating RTLIL representation for module `\$__div_mod_u'.
+Generating RTLIL representation for module `\$__div_mod_trunc'.
+Generating RTLIL representation for module `\_90_div'.
+Generating RTLIL representation for module `\_90_mod'.
+Generating RTLIL representation for module `\$__div_mod_floor'.
+Generating RTLIL representation for module `\_90_divfloor'.
+Generating RTLIL representation for module `\_90_modfloor'.
+Generating RTLIL representation for module `\_90_pow'.
+Generating RTLIL representation for module `\_90_pmux'.
+Generating RTLIL representation for module `\_90_demux'.
+Generating RTLIL representation for module `\_90_lut'.
+Successfully finished Verilog frontend.
+
+4.20.2. Continuing TECHMAP pass.
+Using extmapper simplemap for cells of type $xor.
+Using extmapper simplemap for cells of type $sdff.
+Using extmapper simplemap for cells of type $sdffe.
+Using extmapper simplemap for cells of type $mux.
+Using extmapper simplemap for cells of type $reduce_bool.
+Using extmapper simplemap for cells of type $or.
+Using extmapper simplemap for cells of type $reduce_and.
+Using extmapper maccmap for cells of type $macc.
+  add \a_reg * \b_reg (6x6 bits, signed)
+Using template $paramod$36806147943746cf725b3e1cd07b200b72815b63\_90_alu for cells of type $alu.
+Using template $paramod$7d6746169ce05a8060accab040669bff9f44ded6\_90_alu for cells of type $alu.
+Using template $paramod$0f2aa60fba701d67502e823e64efc6ddc589f33e\_90_alu for cells of type $alu.
+Using template $paramod$1a6407745a4b939fc01b3599f611fd1c90656484\_90_alu for cells of type $alu.
+Using template $paramod$d27e1e72d097256104435bc590a66ffe1243097d\_90_alu for cells of type $alu.
+Using extmapper simplemap for cells of type $and.
+Using extmapper simplemap for cells of type $not.
+Using template $paramod\_90_fa\WIDTH=32'00000000000000000000000000001100 for cells of type $fa.
+Using template $paramod$ee3d784672cdb1cb32d9a801a3af776716f16b74\_90_alu for cells of type $alu.
+Using template $paramod\_90_lcu\WIDTH=32'00000000000000000000000000001111 for cells of type $lcu.
+Using extmapper simplemap for cells of type $pos.
+Using template $paramod\_90_lcu\WIDTH=32'00000000000000000000000000010001 for cells of type $lcu.
+Using template $paramod\_90_lcu\WIDTH=32'00000000000000000000000000001000 for cells of type $lcu.
+Using template $paramod\_90_lcu\WIDTH=32'00000000000000000000000000000011 for cells of type $lcu.
+Using template $paramod\_90_lcu\WIDTH=32'00000000000000000000000000001100 for cells of type $lcu.
+No more expansions possible.
+<suppressed ~1166 debug messages>
+
+4.21. Executing OPT pass (performing simple optimizations).
+
+4.21.1. Executing OPT_EXPR pass (perform const folding).
+Optimizing module mac_pipeline2.
+<suppressed ~418 debug messages>
+
+4.21.2. Executing OPT_MERGE pass (detect identical cells).
+Finding identical cells in module `\mac_pipeline2'.
+<suppressed ~309 debug messages>
+Removed a total of 103 cells.
+
+4.21.3. Executing OPT_DFF pass (perform DFF optimizations).
+
+4.21.4. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \mac_pipeline2..
+Removed 101 unused cells and 336 unused wires.
+<suppressed ~102 debug messages>
+
+4.21.5. Finished fast OPT passes.
+
+4.22. Executing ABC pass (technology mapping using ABC).
+
+4.22.1. Extracting gate netlist of module `\mac_pipeline2' to `<abc-temp-dir>/input.blif'..
+Extracted 522 gates and 565 wires to a netlist network with 41 inputs and 36 outputs.
+
+4.22.1.1. Executing ABC.
+Running ABC command: "<yosys-exe-dir>/yosys-abc" -s -f <abc-temp-dir>/abc.script 2>&1
+ABC: ABC command line: "source <abc-temp-dir>/abc.script".
+ABC: 
+ABC: + read_blif <abc-temp-dir>/input.blif 
+ABC: + read_library <abc-temp-dir>/stdcells.genlib 
+ABC: Entered genlib library with 13 gates from file "<abc-temp-dir>/stdcells.genlib".
+ABC: + strash 
+ABC: + dretime 
+ABC: + map 
+ABC: + write_blif <abc-temp-dir>/output.blif 
+
+4.22.1.2. Re-integrating ABC results.
+ABC RESULTS:              NAND cells:       27
+ABC RESULTS:               NOT cells:       15
+ABC RESULTS:                OR cells:       51
+ABC RESULTS:             ORNOT cells:       15
+ABC RESULTS:               NOR cells:       36
+ABC RESULTS:            ANDNOT cells:      192
+ABC RESULTS:               XOR cells:       63
+ABC RESULTS:              XNOR cells:       46
+ABC RESULTS:               AND cells:       33
+ABC RESULTS:        internal signals:      488
+ABC RESULTS:           input signals:       41
+ABC RESULTS:          output signals:       36
+Removing temp directory.
+
+4.23. Executing OPT pass (performing simple optimizations).
+
+4.23.1. Executing OPT_EXPR pass (perform const folding).
+Optimizing module mac_pipeline2.
+
+4.23.2. Executing OPT_MERGE pass (detect identical cells).
+Finding identical cells in module `\mac_pipeline2'.
+<suppressed ~12 debug messages>
+Removed a total of 4 cells.
+
+4.23.3. Executing OPT_DFF pass (perform DFF optimizations).
+
+4.23.4. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \mac_pipeline2..
+Removed 0 unused cells and 217 unused wires.
+<suppressed ~4 debug messages>
+
+4.23.5. Finished fast OPT passes.
+
+4.24. Executing HIERARCHY pass (managing design hierarchy).
+
+4.24.1. Analyzing design hierarchy..
+Top module:  \mac_pipeline2
+
+4.24.2. Analyzing design hierarchy..
+Top module:  \mac_pipeline2
+Removed 0 unused modules.
+
+4.25. Printing statistics.
+
+=== mac_pipeline2 ===
+
+   Number of wires:                477
+   Number of wire bits:            632
+   Number of public wires:          23
+   Number of public wire bits:     178
+   Number of memories:               0
+   Number of memory bits:            0
+   Number of processes:              0
+   Number of cells:                526
+     $_ANDNOT_                     191
+     $_AND_                         33
+     $_NAND_                        26
+     $_NOR_                         35
+     $_NOT_                         15
+     $_ORNOT_                       15
+     $_OR_                          50
+     $_SDFFE_PP0P_                  23
+     $_SDFF_PP0_                    29
+     $_XNOR_                        46
+     $_XOR_                         63
+
+4.26. Executing CHECK pass (checking for obvious problems).
+Checking module mac_pipeline2...
+Found and reported 0 problems.
+
+5. Printing statistics.
+
+=== mac_pipeline2 ===
+
+   Number of wires:                477
+   Number of wire bits:            632
+   Number of public wires:          23
+   Number of public wire bits:     178
+   Number of memories:               0
+   Number of memory bits:            0
+   Number of processes:              0
+   Number of cells:                526
+     $_ANDNOT_                     191
+     $_AND_                         33
+     $_NAND_                        26
+     $_NOR_                         35
+     $_NOT_                         15
+     $_ORNOT_                       15
+     $_OR_                          50
+     $_SDFFE_PP0P_                  23
+     $_SDFF_PP0_                    29
+     $_XNOR_                        46
+     $_XOR_                         63
+
+End of script. Logfile hash: 01d3a16611, CPU: user 0.30s system 0.02s, MEM: 18.81 MB peak
+Yosys 0.33 (git sha1 2584903a060)
+Time spent: 22% 1x abc (0 sec), 18% 27x opt_expr (0 sec), ...

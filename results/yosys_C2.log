@@ -1,0 +1,731 @@
+
+-- Running command `
+    read_verilog -sv rtl/mac_parameterized.sv
+    chparam -set INPUT_WIDTH 8 -set INPUT_FRAC 4 -set ACC_WIDTH 19 -set ACC_FRAC 8 -set OUTPUT_WIDTH 8 -set OUTPUT_FRAC 4 mac_parameterized
+    hierarchy -top mac_parameterized
+    synth -top mac_parameterized
+    stat
+    ' --
+
+1. Executing Verilog-2005 frontend: rtl/mac_parameterized.sv
+Parsing SystemVerilog input from `rtl/mac_parameterized.sv' to AST representation.
+Generating RTLIL representation for module `\mac_parameterized'.
+Successfully finished Verilog frontend.
+Parameter \INPUT_WIDTH = 8
+Parameter \INPUT_FRAC = 4
+Parameter \ACC_WIDTH = 19
+Parameter \ACC_FRAC = 8
+Parameter \OUTPUT_WIDTH = 8
+Parameter \OUTPUT_FRAC = 4
+
+2. Executing AST frontend in derive mode using pre-parsed AST for module `\mac_parameterized'.
+Parameter \INPUT_WIDTH = 8
+Parameter \INPUT_FRAC = 4
+Parameter \ACC_WIDTH = 19
+Parameter \ACC_FRAC = 8
+Parameter \OUTPUT_WIDTH = 8
+Parameter \OUTPUT_FRAC = 4
+Generating RTLIL representation for module `$paramod$6cc49af1cdf7473d362978fee2f24cd2f6f189dc\mac_parameterized'.
+
+3. Executing HIERARCHY pass (managing design hierarchy).
+
+3.1. Analyzing design hierarchy..
+Top module:  \mac_parameterized
+
+3.2. Analyzing design hierarchy..
+Top module:  \mac_parameterized
+Removed 0 unused modules.
+
+4. Executing SYNTH pass.
+
+4.1. Executing HIERARCHY pass (managing design hierarchy).
+
+4.1.1. Analyzing design hierarchy..
+Top module:  \mac_parameterized
+
+4.1.2. Analyzing design hierarchy..
+Top module:  \mac_parameterized
+Removed 0 unused modules.
+
+4.2. Executing PROC pass (convert processes to netlists).
+
+4.2.1. Executing PROC_CLEAN pass (remove empty switches from decision trees).
+Found and cleaned up 2 empty switches in `\mac_parameterized.$proc$rtl/mac_parameterized.sv:0$38'.
+Found and cleaned up 1 empty switch in `\mac_parameterized.$proc$rtl/mac_parameterized.sv:0$48'.
+Cleaned up 3 empty switches.
+
+4.2.2. Executing PROC_RMDEAD pass (remove dead branches from decision trees).
+Marked 3 switch rules as full_case in process $proc$rtl/mac_parameterized.sv:0$44 in module mac_parameterized.
+Marked 3 switch rules as full_case in process $proc$rtl/mac_parameterized.sv:0$48 in module mac_parameterized.
+Marked 2 switch rules as full_case in process $proc$rtl/mac_parameterized.sv:210$68 in module mac_parameterized.
+Removed a total of 0 dead cases.
+
+4.2.3. Executing PROC_PRUNE pass (remove redundant assignments in processes).
+Removed 1 redundant assignment.
+Promoted 19 assignments to connections.
+
+4.2.4. Executing PROC_INIT pass (extract init attributes).
+
+4.2.5. Executing PROC_ARST pass (detect async resets in processes).
+
+4.2.6. Executing PROC_ROM pass (convert switches to ROMs).
+Converted 0 switches.
+<suppressed ~9 debug messages>
+
+4.2.7. Executing PROC_MUX pass (convert decision trees to multiplexers).
+Creating decoders for process `\mac_parameterized.$proc$rtl/mac_parameterized.sv:0$38'.
+Creating decoders for process `\mac_parameterized.$proc$rtl/mac_parameterized.sv:0$44'.
+     1/3: $2\acc_next[18:0]
+     2/3: $1\acc_next[18:0]
+     3/3: $1\acc_base_ext[20:0]
+Creating decoders for process `\mac_parameterized.$proc$rtl/mac_parameterized.sv:0$48'.
+     1/4: $2\y_next[7:0]
+     2/4: $1\y_next[7:0]
+     3/4: $2\rescale_fixed$func$rtl/mac_parameterized.sv:188$37.$result[20:0]$58
+     4/4: $2\rescale_fixed$func$rtl/mac_parameterized.sv:188$37.magnitude[20:0]$59
+Creating decoders for process `\mac_parameterized.$proc$rtl/mac_parameterized.sv:210$68'.
+     1/3: $0\valid_out[0:0]
+     2/3: $0\accumulator[18:0]
+     3/3: $0\Y[7:0]
+
+4.2.8. Executing PROC_DLATCH pass (convert process syncs to latches).
+No latch inferred for signal `\mac_parameterized.\product' from process `\mac_parameterized.$proc$rtl/mac_parameterized.sv:0$38'.
+No latch inferred for signal `\mac_parameterized.\product_ext' from process `\mac_parameterized.$proc$rtl/mac_parameterized.sv:0$38'.
+No latch inferred for signal `\mac_parameterized.\product_scaled' from process `\mac_parameterized.$proc$rtl/mac_parameterized.sv:0$38'.
+No latch inferred for signal `\mac_parameterized.\rescale_fixed$func$rtl/mac_parameterized.sv:142$36.$result' from process `\mac_parameterized.$proc$rtl/mac_parameterized.sv:0$38'.
+No latch inferred for signal `\mac_parameterized.\rescale_fixed$func$rtl/mac_parameterized.sv:142$36.value' from process `\mac_parameterized.$proc$rtl/mac_parameterized.sv:0$38'.
+No latch inferred for signal `\mac_parameterized.\acc_base_ext' from process `\mac_parameterized.$proc$rtl/mac_parameterized.sv:0$44'.
+No latch inferred for signal `\mac_parameterized.\sum_ext' from process `\mac_parameterized.$proc$rtl/mac_parameterized.sv:0$44'.
+No latch inferred for signal `\mac_parameterized.\acc_next' from process `\mac_parameterized.$proc$rtl/mac_parameterized.sv:0$44'.
+No latch inferred for signal `\mac_parameterized.\output_scaled' from process `\mac_parameterized.$proc$rtl/mac_parameterized.sv:0$48'.
+No latch inferred for signal `\mac_parameterized.\y_next' from process `\mac_parameterized.$proc$rtl/mac_parameterized.sv:0$48'.
+No latch inferred for signal `\mac_parameterized.\rescale_fixed$func$rtl/mac_parameterized.sv:188$37.$result' from process `\mac_parameterized.$proc$rtl/mac_parameterized.sv:0$48'.
+No latch inferred for signal `\mac_parameterized.\rescale_fixed$func$rtl/mac_parameterized.sv:188$37.value' from process `\mac_parameterized.$proc$rtl/mac_parameterized.sv:0$48'.
+No latch inferred for signal `\mac_parameterized.\rescale_fixed$func$rtl/mac_parameterized.sv:188$37.magnitude' from process `\mac_parameterized.$proc$rtl/mac_parameterized.sv:0$48'.
+No latch inferred for signal `\mac_parameterized.\rescale_fixed$func$rtl/mac_parameterized.sv:188$37.bias' from process `\mac_parameterized.$proc$rtl/mac_parameterized.sv:0$48'.
+
+4.2.9. Executing PROC_DFF pass (convert process syncs to FFs).
+Creating register for signal `\mac_parameterized.\Y' using process `\mac_parameterized.$proc$rtl/mac_parameterized.sv:210$68'.
+  created $dff cell `$procdff$117' with positive edge clock.
+Creating register for signal `\mac_parameterized.\valid_out' using process `\mac_parameterized.$proc$rtl/mac_parameterized.sv:210$68'.
+  created $dff cell `$procdff$118' with positive edge clock.
+Creating register for signal `\mac_parameterized.\accumulator' using process `\mac_parameterized.$proc$rtl/mac_parameterized.sv:210$68'.
+  created $dff cell `$procdff$119' with positive edge clock.
+
+4.2.10. Executing PROC_MEMWR pass (convert process memory writes to cells).
+
+4.2.11. Executing PROC_CLEAN pass (remove empty switches from decision trees).
+Removing empty process `mac_parameterized.$proc$rtl/mac_parameterized.sv:0$38'.
+Found and cleaned up 3 empty switches in `\mac_parameterized.$proc$rtl/mac_parameterized.sv:0$44'.
+Removing empty process `mac_parameterized.$proc$rtl/mac_parameterized.sv:0$44'.
+Found and cleaned up 3 empty switches in `\mac_parameterized.$proc$rtl/mac_parameterized.sv:0$48'.
+Removing empty process `mac_parameterized.$proc$rtl/mac_parameterized.sv:0$48'.
+Found and cleaned up 3 empty switches in `\mac_parameterized.$proc$rtl/mac_parameterized.sv:210$68'.
+Removing empty process `mac_parameterized.$proc$rtl/mac_parameterized.sv:210$68'.
+Cleaned up 9 empty switches.
+
+4.2.12. Executing OPT_EXPR pass (perform const folding).
+Optimizing module mac_parameterized.
+<suppressed ~3 debug messages>
+
+4.3. Executing OPT_EXPR pass (perform const folding).
+Optimizing module mac_parameterized.
+
+4.4. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \mac_parameterized..
+Removed 1 unused cells and 59 unused wires.
+<suppressed ~4 debug messages>
+
+4.5. Executing CHECK pass (checking for obvious problems).
+Checking module mac_parameterized...
+Found and reported 0 problems.
+
+4.6. Executing OPT pass (performing simple optimizations).
+
+4.6.1. Executing OPT_EXPR pass (perform const folding).
+Optimizing module mac_parameterized.
+
+4.6.2. Executing OPT_MERGE pass (detect identical cells).
+Finding identical cells in module `\mac_parameterized'.
+Removed a total of 0 cells.
+
+4.6.3. Executing OPT_MUXTREE pass (detect dead branches in mux trees).
+Running muxtree optimizer on module \mac_parameterized..
+  Creating internal representation of mux trees.
+  Evaluating internal representation of mux trees.
+  Analyzing evaluation results.
+    dead port 1/2 on $mux $procmux$75.
+    dead port 1/2 on $mux $procmux$87.
+Removed 2 multiplexer ports.
+<suppressed ~6 debug messages>
+
+4.6.4. Executing OPT_REDUCE pass (consolidate $*mux and $reduce_* inputs).
+  Optimizing cells in module \mac_parameterized.
+Performed a total of 0 changes.
+
+4.6.5. Executing OPT_MERGE pass (detect identical cells).
+Finding identical cells in module `\mac_parameterized'.
+Removed a total of 0 cells.
+
+4.6.6. Executing OPT_DFF pass (perform DFF optimizations).
+
+4.6.7. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \mac_parameterized..
+Removed 0 unused cells and 2 unused wires.
+<suppressed ~1 debug messages>
+
+4.6.8. Executing OPT_EXPR pass (perform const folding).
+Optimizing module mac_parameterized.
+
+4.6.9. Rerunning OPT passes. (Maybe there is more to do..)
+
+4.6.10. Executing OPT_MUXTREE pass (detect dead branches in mux trees).
+Running muxtree optimizer on module \mac_parameterized..
+  Creating internal representation of mux trees.
+  Evaluating internal representation of mux trees.
+  Analyzing evaluation results.
+Removed 0 multiplexer ports.
+<suppressed ~6 debug messages>
+
+4.6.11. Executing OPT_REDUCE pass (consolidate $*mux and $reduce_* inputs).
+  Optimizing cells in module \mac_parameterized.
+Performed a total of 0 changes.
+
+4.6.12. Executing OPT_MERGE pass (detect identical cells).
+Finding identical cells in module `\mac_parameterized'.
+Removed a total of 0 cells.
+
+4.6.13. Executing OPT_DFF pass (perform DFF optimizations).
+
+4.6.14. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \mac_parameterized..
+
+4.6.15. Executing OPT_EXPR pass (perform const folding).
+Optimizing module mac_parameterized.
+
+4.6.16. Finished OPT passes. (There is nothing left to do.)
+
+4.7. Executing FSM pass (extract and optimize FSM).
+
+4.7.1. Executing FSM_DETECT pass (finding FSMs in design).
+
+4.7.2. Executing FSM_EXTRACT pass (extracting FSM from design).
+
+4.7.3. Executing FSM_OPT pass (simple optimizations of FSMs).
+
+4.7.4. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \mac_parameterized..
+
+4.7.5. Executing FSM_OPT pass (simple optimizations of FSMs).
+
+4.7.6. Executing FSM_RECODE pass (re-assigning FSM state encoding).
+
+4.7.7. Executing FSM_INFO pass (dumping all available information on FSM cells).
+
+4.7.8. Executing FSM_MAP pass (mapping FSMs to basic logic).
+
+4.8. Executing OPT pass (performing simple optimizations).
+
+4.8.1. Executing OPT_EXPR pass (perform const folding).
+Optimizing module mac_parameterized.
+
+4.8.2. Executing OPT_MERGE pass (detect identical cells).
+Finding identical cells in module `\mac_parameterized'.
+Removed a total of 0 cells.
+
+4.8.3. Executing OPT_MUXTREE pass (detect dead branches in mux trees).
+Running muxtree optimizer on module \mac_parameterized..
+  Creating internal representation of mux trees.
+  Evaluating internal representation of mux trees.
+  Analyzing evaluation results.
+Removed 0 multiplexer ports.
+<suppressed ~6 debug messages>
+
+4.8.4. Executing OPT_REDUCE pass (consolidate $*mux and $reduce_* inputs).
+  Optimizing cells in module \mac_parameterized.
+Performed a total of 0 changes.
+
+4.8.5. Executing OPT_MERGE pass (detect identical cells).
+Finding identical cells in module `\mac_parameterized'.
+Removed a total of 0 cells.
+
+4.8.6. Executing OPT_DFF pass (perform DFF optimizations).
+Adding SRST signal on $procdff$119 ($dff) from module mac_parameterized (D = $procmux$101_Y, Q = \accumulator, rval = 19'0000000000000000000).
+Adding EN signal on $auto$ff.cc:266:slice$120 ($sdff) from module mac_parameterized (D = \acc_next, Q = \accumulator).
+Adding SRST signal on $procdff$118 ($dff) from module mac_parameterized (D = \valid_in, Q = \valid_out, rval = 1'0).
+Adding SRST signal on $procdff$117 ($dff) from module mac_parameterized (D = $procmux$112_Y, Q = \Y, rval = 8'00000000).
+Adding EN signal on $auto$ff.cc:266:slice$125 ($sdff) from module mac_parameterized (D = \y_next, Q = \Y).
+
+4.8.7. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \mac_parameterized..
+Removed 7 unused cells and 7 unused wires.
+<suppressed ~8 debug messages>
+
+4.8.8. Executing OPT_EXPR pass (perform const folding).
+Optimizing module mac_parameterized.
+
+4.8.9. Rerunning OPT passes. (Maybe there is more to do..)
+
+4.8.10. Executing OPT_MUXTREE pass (detect dead branches in mux trees).
+Running muxtree optimizer on module \mac_parameterized..
+  Creating internal representation of mux trees.
+  Evaluating internal representation of mux trees.
+  Analyzing evaluation results.
+Removed 0 multiplexer ports.
+<suppressed ~4 debug messages>
+
+4.8.11. Executing OPT_REDUCE pass (consolidate $*mux and $reduce_* inputs).
+  Optimizing cells in module \mac_parameterized.
+Performed a total of 0 changes.
+
+4.8.12. Executing OPT_MERGE pass (detect identical cells).
+Finding identical cells in module `\mac_parameterized'.
+Removed a total of 0 cells.
+
+4.8.13. Executing OPT_DFF pass (perform DFF optimizations).
+
+4.8.14. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \mac_parameterized..
+
+4.8.15. Executing OPT_EXPR pass (perform const folding).
+Optimizing module mac_parameterized.
+
+4.8.16. Finished OPT passes. (There is nothing left to do.)
+
+4.9. Executing WREDUCE pass (reducing word size of cells).
+Removed top 5 bits (of 21) from port B of cell mac_parameterized.$add$rtl/mac_parameterized.sv:166$45 ($add).
+Removed top 2 bits (of 21) from port B of cell mac_parameterized.$gt$rtl/mac_parameterized.sv:170$46 ($gt).
+Removed top 2 bits (of 21) from port B of cell mac_parameterized.$lt$rtl/mac_parameterized.sv:173$47 ($lt).
+Removed top 2 bits (of 21) from port A of cell mac_parameterized.$ge$rtl/mac_parameterized.sv:102$57 ($ge).
+Removed top 31 bits (of 32) from port B of cell mac_parameterized.$ge$rtl/mac_parameterized.sv:102$57 ($ge).
+Removed top 2 bits (of 21) from port A of cell mac_parameterized.$add$rtl/mac_parameterized.sv:104$60 ($add).
+Removed top 16 bits (of 21) from port B of cell mac_parameterized.$add$rtl/mac_parameterized.sv:104$60 ($add).
+Removed top 1 bits (of 21) from port Y of cell mac_parameterized.$add$rtl/mac_parameterized.sv:104$60 ($add).
+Removed top 2 bits (of 21) from port A of cell mac_parameterized.$neg$rtl/mac_parameterized.sv:107$62 ($neg).
+Removed top 16 bits (of 21) from port B of cell mac_parameterized.$add$rtl/mac_parameterized.sv:109$63 ($add).
+Removed top 4 bits (of 21) from port A of cell mac_parameterized.$neg$rtl/mac_parameterized.sv:109$65 ($neg).
+Removed top 13 bits (of 21) from port B of cell mac_parameterized.$gt$rtl/mac_parameterized.sv:194$66 ($gt).
+Removed top 13 bits (of 21) from port B of cell mac_parameterized.$lt$rtl/mac_parameterized.sv:197$67 ($lt).
+
+4.10. Executing PEEPOPT pass (run peephole optimizers).
+
+4.11. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \mac_parameterized..
+
+4.12. Executing ALUMACC pass (create $alu and $macc cells).
+Extracting $alu and $macc cells in module mac_parameterized:
+  creating $macc model for $add$rtl/mac_parameterized.sv:104$60 ($add).
+  creating $macc model for $add$rtl/mac_parameterized.sv:109$63 ($add).
+  creating $macc model for $add$rtl/mac_parameterized.sv:166$45 ($add).
+  creating $macc model for $mul$rtl/mac_parameterized.sv:133$41 ($mul).
+  creating $macc model for $neg$rtl/mac_parameterized.sv:107$62 ($neg).
+  creating $macc model for $neg$rtl/mac_parameterized.sv:109$65 ($neg).
+  merging $macc model for $mul$rtl/mac_parameterized.sv:133$41 into $add$rtl/mac_parameterized.sv:166$45.
+  merging $macc model for $neg$rtl/mac_parameterized.sv:107$62 into $add$rtl/mac_parameterized.sv:109$63.
+  creating $alu model for $macc $add$rtl/mac_parameterized.sv:109$63.
+  creating $alu model for $macc $add$rtl/mac_parameterized.sv:104$60.
+  creating $macc cell for $add$rtl/mac_parameterized.sv:166$45: $auto$alumacc.cc:365:replace_macc$131
+  creating $macc cell for $neg$rtl/mac_parameterized.sv:109$65: $auto$alumacc.cc:365:replace_macc$132
+  creating $alu model for $ge$rtl/mac_parameterized.sv:102$57 ($ge): new $alu
+  creating $alu model for $gt$rtl/mac_parameterized.sv:170$46 ($gt): new $alu
+  creating $alu model for $gt$rtl/mac_parameterized.sv:194$66 ($gt): new $alu
+  creating $alu model for $lt$rtl/mac_parameterized.sv:173$47 ($lt): new $alu
+  creating $alu model for $lt$rtl/mac_parameterized.sv:197$67 ($lt): new $alu
+  creating $alu cell for $lt$rtl/mac_parameterized.sv:197$67: $auto$alumacc.cc:485:replace_alu$138
+  creating $alu cell for $lt$rtl/mac_parameterized.sv:173$47: $auto$alumacc.cc:485:replace_alu$151
+  creating $alu cell for $gt$rtl/mac_parameterized.sv:194$66: $auto$alumacc.cc:485:replace_alu$164
+  creating $alu cell for $gt$rtl/mac_parameterized.sv:170$46: $auto$alumacc.cc:485:replace_alu$171
+  creating $alu cell for $ge$rtl/mac_parameterized.sv:102$57: $auto$alumacc.cc:485:replace_alu$178
+  creating $alu cell for $add$rtl/mac_parameterized.sv:104$60: $auto$alumacc.cc:485:replace_alu$189
+  creating $alu cell for $add$rtl/mac_parameterized.sv:109$63: $auto$alumacc.cc:485:replace_alu$192
+  created 7 $alu and 2 $macc cells.
+
+4.13. Executing SHARE pass (SAT-based resource sharing).
+
+4.14. Executing OPT pass (performing simple optimizations).
+
+4.14.1. Executing OPT_EXPR pass (perform const folding).
+Optimizing module mac_parameterized.
+<suppressed ~2 debug messages>
+
+4.14.2. Executing OPT_MERGE pass (detect identical cells).
+Finding identical cells in module `\mac_parameterized'.
+Removed a total of 0 cells.
+
+4.14.3. Executing OPT_MUXTREE pass (detect dead branches in mux trees).
+Running muxtree optimizer on module \mac_parameterized..
+  Creating internal representation of mux trees.
+  Evaluating internal representation of mux trees.
+  Analyzing evaluation results.
+Removed 0 multiplexer ports.
+<suppressed ~4 debug messages>
+
+4.14.4. Executing OPT_REDUCE pass (consolidate $*mux and $reduce_* inputs).
+  Optimizing cells in module \mac_parameterized.
+Performed a total of 0 changes.
+
+4.14.5. Executing OPT_MERGE pass (detect identical cells).
+Finding identical cells in module `\mac_parameterized'.
+Removed a total of 0 cells.
+
+4.14.6. Executing OPT_DFF pass (perform DFF optimizations).
+
+4.14.7. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \mac_parameterized..
+Removed 4 unused cells and 11 unused wires.
+<suppressed ~8 debug messages>
+
+4.14.8. Executing OPT_EXPR pass (perform const folding).
+Optimizing module mac_parameterized.
+
+4.14.9. Rerunning OPT passes. (Maybe there is more to do..)
+
+4.14.10. Executing OPT_MUXTREE pass (detect dead branches in mux trees).
+Running muxtree optimizer on module \mac_parameterized..
+  Creating internal representation of mux trees.
+  Evaluating internal representation of mux trees.
+  Analyzing evaluation results.
+Removed 0 multiplexer ports.
+<suppressed ~4 debug messages>
+
+4.14.11. Executing OPT_REDUCE pass (consolidate $*mux and $reduce_* inputs).
+  Optimizing cells in module \mac_parameterized.
+Performed a total of 0 changes.
+
+4.14.12. Executing OPT_MERGE pass (detect identical cells).
+Finding identical cells in module `\mac_parameterized'.
+Removed a total of 0 cells.
+
+4.14.13. Executing OPT_DFF pass (perform DFF optimizations).
+
+4.14.14. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \mac_parameterized..
+
+4.14.15. Executing OPT_EXPR pass (perform const folding).
+Optimizing module mac_parameterized.
+
+4.14.16. Finished OPT passes. (There is nothing left to do.)
+
+4.15. Executing MEMORY pass.
+
+4.15.1. Executing OPT_MEM pass (optimize memories).
+Performed a total of 0 transformations.
+
+4.15.2. Executing OPT_MEM_PRIORITY pass (removing unnecessary memory write priority relations).
+Performed a total of 0 transformations.
+
+4.15.3. Executing OPT_MEM_FEEDBACK pass (finding memory read-to-write feedback paths).
+
+4.15.4. Executing MEMORY_BMUX2ROM pass (converting muxes to ROMs).
+
+4.15.5. Executing MEMORY_DFF pass (merging $dff cells to $memrd).
+
+4.15.6. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \mac_parameterized..
+
+4.15.7. Executing MEMORY_SHARE pass (consolidating $memrd/$memwr cells).
+
+4.15.8. Executing OPT_MEM_WIDEN pass (optimize memories where all ports are wide).
+Performed a total of 0 transformations.
+
+4.15.9. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \mac_parameterized..
+
+4.15.10. Executing MEMORY_COLLECT pass (generating $mem cells).
+
+4.16. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \mac_parameterized..
+
+4.17. Executing OPT pass (performing simple optimizations).
+
+4.17.1. Executing OPT_EXPR pass (perform const folding).
+Optimizing module mac_parameterized.
+<suppressed ~3 debug messages>
+
+4.17.2. Executing OPT_MERGE pass (detect identical cells).
+Finding identical cells in module `\mac_parameterized'.
+Removed a total of 0 cells.
+
+4.17.3. Executing OPT_DFF pass (perform DFF optimizations).
+
+4.17.4. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \mac_parameterized..
+Removed 25 unused cells and 25 unused wires.
+<suppressed ~26 debug messages>
+
+4.17.5. Finished fast OPT passes.
+
+4.18. Executing MEMORY_MAP pass (converting memories to logic and flip-flops).
+
+4.19. Executing OPT pass (performing simple optimizations).
+
+4.19.1. Executing OPT_EXPR pass (perform const folding).
+Optimizing module mac_parameterized.
+
+4.19.2. Executing OPT_MERGE pass (detect identical cells).
+Finding identical cells in module `\mac_parameterized'.
+Removed a total of 0 cells.
+
+4.19.3. Executing OPT_MUXTREE pass (detect dead branches in mux trees).
+Running muxtree optimizer on module \mac_parameterized..
+  Creating internal representation of mux trees.
+  Evaluating internal representation of mux trees.
+  Analyzing evaluation results.
+Removed 0 multiplexer ports.
+<suppressed ~4 debug messages>
+
+4.19.4. Executing OPT_REDUCE pass (consolidate $*mux and $reduce_* inputs).
+  Optimizing cells in module \mac_parameterized.
+    Consolidated identical input bits for $mux cell $procmux$81:
+      Old ports: A={ \accumulator [18] \accumulator [18] \accumulator }, B=21'000000000000000000000, Y=\acc_base_ext
+      New ports: A=\accumulator, B=19'0000000000000000000, Y=\acc_base_ext [18:0]
+      New connections: \acc_base_ext [20:19] = { \acc_base_ext [18] \acc_base_ext [18] }
+  Optimizing cells in module \mac_parameterized.
+Performed a total of 1 changes.
+
+4.19.5. Executing OPT_MERGE pass (detect identical cells).
+Finding identical cells in module `\mac_parameterized'.
+Removed a total of 0 cells.
+
+4.19.6. Executing OPT_SHARE pass.
+
+4.19.7. Executing OPT_DFF pass (perform DFF optimizations).
+
+4.19.8. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \mac_parameterized..
+
+4.19.9. Executing OPT_EXPR pass (perform const folding).
+Optimizing module mac_parameterized.
+
+4.19.10. Rerunning OPT passes. (Maybe there is more to do..)
+
+4.19.11. Executing OPT_MUXTREE pass (detect dead branches in mux trees).
+Running muxtree optimizer on module \mac_parameterized..
+  Creating internal representation of mux trees.
+  Evaluating internal representation of mux trees.
+  Analyzing evaluation results.
+Removed 0 multiplexer ports.
+<suppressed ~4 debug messages>
+
+4.19.12. Executing OPT_REDUCE pass (consolidate $*mux and $reduce_* inputs).
+  Optimizing cells in module \mac_parameterized.
+Performed a total of 0 changes.
+
+4.19.13. Executing OPT_MERGE pass (detect identical cells).
+Finding identical cells in module `\mac_parameterized'.
+Removed a total of 0 cells.
+
+4.19.14. Executing OPT_SHARE pass.
+
+4.19.15. Executing OPT_DFF pass (perform DFF optimizations).
+
+4.19.16. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \mac_parameterized..
+
+4.19.17. Executing OPT_EXPR pass (perform const folding).
+Optimizing module mac_parameterized.
+
+4.19.18. Finished OPT passes. (There is nothing left to do.)
+
+4.20. Executing TECHMAP pass (map to technology primitives).
+
+4.20.1. Executing Verilog-2005 frontend: /usr/bin/../share/yosys/techmap.v
+Parsing Verilog input from `/usr/bin/../share/yosys/techmap.v' to AST representation.
+Generating RTLIL representation for module `\_90_simplemap_bool_ops'.
+Generating RTLIL representation for module `\_90_simplemap_reduce_ops'.
+Generating RTLIL representation for module `\_90_simplemap_logic_ops'.
+Generating RTLIL representation for module `\_90_simplemap_compare_ops'.
+Generating RTLIL representation for module `\_90_simplemap_various'.
+Generating RTLIL representation for module `\_90_simplemap_registers'.
+Generating RTLIL representation for module `\_90_shift_ops_shr_shl_sshl_sshr'.
+Generating RTLIL representation for module `\_90_shift_shiftx'.
+Generating RTLIL representation for module `\_90_fa'.
+Generating RTLIL representation for module `\_90_lcu'.
+Generating RTLIL representation for module `\_90_alu'.
+Generating RTLIL representation for module `\_90_macc'.
+Generating RTLIL representation for module `\_90_alumacc'.
+Generating RTLIL representation for module `\$__div_mod_u'.
+Generating RTLIL representation for module `\$__div_mod_trunc'.
+Generating RTLIL representation for module `\_90_div'.
+Generating RTLIL representation for module `\_90_mod'.
+Generating RTLIL representation for module `\$__div_mod_floor'.
+Generating RTLIL representation for module `\_90_divfloor'.
+Generating RTLIL representation for module `\_90_modfloor'.
+Generating RTLIL representation for module `\_90_pow'.
+Generating RTLIL representation for module `\_90_pmux'.
+Generating RTLIL representation for module `\_90_demux'.
+Generating RTLIL representation for module `\_90_lut'.
+Successfully finished Verilog frontend.
+
+4.20.2. Continuing TECHMAP pass.
+Using extmapper simplemap for cells of type $reduce_and.
+Using template $paramod$717d74bef61b77dc38001d2d7283b449b5e00e43\_90_alu for cells of type $alu.
+Using extmapper simplemap for cells of type $xor.
+Using extmapper simplemap for cells of type $mux.
+Using extmapper simplemap for cells of type $or.
+Using extmapper simplemap for cells of type $reduce_or.
+Using extmapper simplemap for cells of type $not.
+Using extmapper simplemap for cells of type $sdffe.
+Using extmapper maccmap for cells of type $macc.
+  add { \acc_base_ext [20] \acc_base_ext [20] \acc_base_ext [20] \acc_base_ext [17:0] } (21 bits, signed)
+  add \A * \B (8x8 bits, signed)
+Using extmapper simplemap for cells of type $sdff.
+  sub $add$rtl/mac_parameterized.sv:109$63_Y [20:4] (17 bits, signed)
+Using template $paramod$9d89fb639f737cac60740e160831d647469879cc\_90_alu for cells of type $alu.
+Using template $paramod$c9802b9651b156355e5a6461d110c78c18d85ad1\_90_alu for cells of type $alu.
+Using template $paramod$55ae4340433dc30a1848dc3e4088c1fb49ccc472\_90_alu for cells of type $alu.
+Using template $paramod$ce0681ef99a6518fee922dc79cbab38d4dcce010\_90_alu for cells of type $alu.
+Using template $paramod$1a6407745a4b939fc01b3599f611fd1c90656484\_90_alu for cells of type $alu.
+Using template $paramod$f6204d539825bbe3c5f4c2b533537d765b481d92\_90_alu for cells of type $alu.
+Using extmapper simplemap for cells of type $logic_not.
+Using extmapper simplemap for cells of type $logic_and.
+Using extmapper simplemap for cells of type $and.
+Using template $paramod\_90_lcu\WIDTH=32'00000000000000000000000000010101 for cells of type $lcu.
+Using extmapper simplemap for cells of type $pos.
+Using template $paramod\_90_fa\WIDTH=32'00000000000000000000000000010101 for cells of type $fa.
+Using template $paramod$950cc9f9d9b07c09d0ee4a231126f2c8a3c4f78a\_90_alu for cells of type $alu.
+Using template $paramod\_90_lcu\WIDTH=32'00000000000000000000000000010011 for cells of type $lcu.
+Using template $paramod\_90_lcu\WIDTH=32'00000000000000000000000000001110 for cells of type $lcu.
+Using template $paramod\_90_lcu\WIDTH=32'00000000000000000000000000010001 for cells of type $lcu.
+Using template $paramod\_90_lcu\WIDTH=32'00000000000000000000000000000011 for cells of type $lcu.
+No more expansions possible.
+<suppressed ~1625 debug messages>
+
+4.21. Executing OPT pass (performing simple optimizations).
+
+4.21.1. Executing OPT_EXPR pass (perform const folding).
+Optimizing module mac_parameterized.
+<suppressed ~1042 debug messages>
+
+4.21.2. Executing OPT_MERGE pass (detect identical cells).
+Finding identical cells in module `\mac_parameterized'.
+<suppressed ~990 debug messages>
+Removed a total of 330 cells.
+
+4.21.3. Executing OPT_DFF pass (perform DFF optimizations).
+
+4.21.4. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \mac_parameterized..
+Removed 159 unused cells and 694 unused wires.
+<suppressed ~160 debug messages>
+
+4.21.5. Finished fast OPT passes.
+
+4.22. Executing ABC pass (technology mapping using ABC).
+
+4.22.1. Extracting gate netlist of module `\mac_parameterized' to `<abc-temp-dir>/input.blif'..
+Extracted 1126 gates and 1166 wires to a netlist network with 38 inputs and 29 outputs.
+
+4.22.1.1. Executing ABC.
+Running ABC command: "<yosys-exe-dir>/yosys-abc" -s -f <abc-temp-dir>/abc.script 2>&1
+ABC: ABC command line: "source <abc-temp-dir>/abc.script".
+ABC: 
+ABC: + read_blif <abc-temp-dir>/input.blif 
+ABC: + read_library <abc-temp-dir>/stdcells.genlib 
+ABC: Entered genlib library with 13 gates from file "<abc-temp-dir>/stdcells.genlib".
+ABC: + strash 
+ABC: + dretime 
+ABC: + map 
+ABC: + write_blif <abc-temp-dir>/output.blif 
+
+4.22.1.2. Re-integrating ABC results.
+ABC RESULTS:             ORNOT cells:       56
+ABC RESULTS:               XOR cells:      189
+ABC RESULTS:              XNOR cells:      103
+ABC RESULTS:               MUX cells:       19
+ABC RESULTS:               AND cells:       72
+ABC RESULTS:              NAND cells:       38
+ABC RESULTS:                OR cells:      127
+ABC RESULTS:               NOR cells:       67
+ABC RESULTS:            ANDNOT cells:      329
+ABC RESULTS:               NOT cells:       29
+ABC RESULTS:        internal signals:     1099
+ABC RESULTS:           input signals:       38
+ABC RESULTS:          output signals:       29
+Removing temp directory.
+
+4.23. Executing OPT pass (performing simple optimizations).
+
+4.23.1. Executing OPT_EXPR pass (perform const folding).
+Optimizing module mac_parameterized.
+
+4.23.2. Executing OPT_MERGE pass (detect identical cells).
+Finding identical cells in module `\mac_parameterized'.
+<suppressed ~12 debug messages>
+Removed a total of 4 cells.
+
+4.23.3. Executing OPT_DFF pass (perform DFF optimizations).
+
+4.23.4. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \mac_parameterized..
+Removed 0 unused cells and 288 unused wires.
+<suppressed ~3 debug messages>
+
+4.23.5. Finished fast OPT passes.
+
+4.24. Executing HIERARCHY pass (managing design hierarchy).
+
+4.24.1. Analyzing design hierarchy..
+Top module:  \mac_parameterized
+
+4.24.2. Analyzing design hierarchy..
+Top module:  \mac_parameterized
+Removed 0 unused modules.
+
+4.25. Printing statistics.
+
+=== mac_parameterized ===
+
+   Number of wires:               1014
+   Number of wire bits:           1178
+   Number of public wires:          16
+   Number of public wire bits:     180
+   Number of memories:               0
+   Number of memory bits:            0
+   Number of processes:              0
+   Number of cells:               1053
+     $_ANDNOT_                     326
+     $_AND_                         72
+     $_MUX_                         19
+     $_NAND_                        38
+     $_NOR_                         67
+     $_NOT_                         29
+     $_ORNOT_                       56
+     $_OR_                         126
+     $_SDFFE_PP0P_                  27
+     $_SDFF_PP0_                     1
+     $_XNOR_                       103
+     $_XOR_                        189
+
+4.26. Executing CHECK pass (checking for obvious problems).
+Checking module mac_parameterized...
+Found and reported 0 problems.
+
+5. Printing statistics.
+
+=== mac_parameterized ===
+
+   Number of wires:               1014
+   Number of wire bits:           1178
+   Number of public wires:          16
+   Number of public wire bits:     180
+   Number of memories:               0
+   Number of memory bits:            0
+   Number of processes:              0
+   Number of cells:               1053
+     $_ANDNOT_                     326
+     $_AND_                         72
+     $_MUX_                         19
+     $_NAND_                        38
+     $_NOR_                         67
+     $_NOT_                         29
+     $_ORNOT_                       56
+     $_OR_                         126
+     $_SDFFE_PP0P_                  27
+     $_SDFF_PP0_                     1
+     $_XNOR_                       103
+     $_XOR_                        189
+
+End of script. Logfile hash: dede37edc0, CPU: user 0.46s system 0.02s, MEM: 23.45 MB peak
+Yosys 0.33 (git sha1 2584903a060)
+Time spent: 24% 1x abc (0 sec), 19% 27x opt_expr (0 sec), ...

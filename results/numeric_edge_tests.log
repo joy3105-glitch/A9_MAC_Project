@@ -1,0 +1,24 @@
+PASS rounding 0.5: 1
+PASS rounding -0.5: -1
+PASS rounding 1.5: 2
+PASS rounding -1.5: -2
+PASS rounding 2.5: 3
+PASS rounding -2.5: -3
+PASS rescale 8: 1
+PASS rescale -8: -1
+PASS rescale 7: 0
+PASS rescale -7: 0
+PASS rescale 24: 2
+PASS rescale -24: -2
+PASS left shift positive: 112
+PASS left shift negative: -112
+PASS accumulator saturate: 0
+PASS accumulator saturate_each_step: -73
+PASS accumulator wrap: 0
+PASS F input_frac=2: 2
+PASS F input_frac=3: 2
+PASS F input_frac=4: 2
+PASS F input_frac=5: 2
+PASS F input_frac=6: 2
+
+NUMERIC EDGE TESTS PASS: 22 checks

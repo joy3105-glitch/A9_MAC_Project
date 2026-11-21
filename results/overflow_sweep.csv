@@ -1,0 +1,8 @@
+experiment,mode,num_samples,mae,mse,rmse,max_error
+input_overflow,saturate,6,1.0208333333333333,1.73046875,1.3154728237405742,2.0625
+input_overflow,wrap,6,10.666666666666666,170.66666666666666,13.063945294843617,16.0
+accumulator_overflow,saturate,1,0.0,0.0,0.0,0.0
+accumulator_overflow,saturate_each_step,1,73.0,5329.0,73.0,73.0
+accumulator_overflow,wrap,1,0.0,0.0,0.0,0.0
+output_overflow,saturate,4,384.03125,147480.001953125,384.0312512714623,384.0625
+output_overflow,wrap,4,392.0,153728.0,392.08162415497105,400.0
