@@ -38,3 +38,34 @@ results/blif_P0_C2.log
 # Keep experiment evidence logs
 !results/
 !results/*.log
+
+# Local documentation backups
+README.md.bak
+README_before_final_update.md
+
+# Local ASIC technology libraries
+/liberty/
+
+# Generated ASIC netlists and intermediate files
+results/asic_sky130_filtered/*_mapped.v
+results/asic_sky130_filtered/*.json
+
+# Generated temporary data
+*.tmp
+
+# FPGA intermediate implementation artifacts
+results/fpga_ice40/*.asc
+results/fpga_ice40/*.json
+
+# ASIC simulation executables
+results/asic_sky130_filtered/simulation/*.vvp
+
+# Temporary ASIC synthesis outputs
+results/asic_sky130_filtered/*_mapped.v
+
+# Local documentation backups
+README.md.bak
+README_before_final_update.md
+
+# Local ASIC Liberty
+/liberty/
