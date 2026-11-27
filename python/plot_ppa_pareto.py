@@ -21,6 +21,7 @@ for r in rows:
         "asic_cell_area_um2",
         "asic_reg_reg_fmax_est_mhz",
         "fpga_fmax_mhz",
+        "asic_total_power_mw",
     ]:
         r[key] = float(r[key])
 
@@ -120,13 +121,14 @@ plt.grid(alpha=0.3)
 save_plot("fpga_vs_asic_fmax.png")
 
 
-# 5. Pareto dominance: MAE min, area min, Fmax max
+# 5. Pareto dominance: MAE min, area min, power min, Fmax max
 def dominates(a, b):
     not_worse = (
         a["mae"] <= b["mae"]
         and a["asic_cell_area_um2"] <= b["asic_cell_area_um2"]
         and a["asic_reg_reg_fmax_est_mhz"]
             >= b["asic_reg_reg_fmax_est_mhz"]
+        and a["asic_total_power_mw"] <= b["asic_total_power_mw"]
     )
 
     strictly_better = (
@@ -134,6 +136,7 @@ def dominates(a, b):
         or a["asic_cell_area_um2"] < b["asic_cell_area_um2"]
         or a["asic_reg_reg_fmax_est_mhz"]
             > b["asic_reg_reg_fmax_est_mhz"]
+        or a["asic_total_power_mw"] < b["asic_total_power_mw"]
     )
 
     return not_worse and strictly_better
@@ -159,6 +162,7 @@ with out.open("w", newline="") as f:
             "mae",
             "asic_cell_area_um2",
             "asic_reg_reg_fmax_est_mhz",
+            "asic_total_power_mw",
             "pareto",
         ]
     )
@@ -172,6 +176,7 @@ with out.open("w", newline="") as f:
             "asic_cell_area_um2": r["asic_cell_area_um2"],
             "asic_reg_reg_fmax_est_mhz":
                 r["asic_reg_reg_fmax_est_mhz"],
+            "asic_total_power_mw": r["asic_total_power_mw"],
             "pareto": r["pareto"],
         })
 
@@ -204,7 +209,7 @@ for r in rows:
 
 plt.xlabel("ASIC standard-cell area (um2)")
 plt.ylabel("Estimated reg-to-reg Fmax (MHz)")
-plt.title("ASIC Pareto Candidates (MAE, Area, Fmax)")
+plt.title("ASIC Pareto Candidates (MAE, Area, Power, Fmax)")
 plt.legend()
 plt.grid(alpha=0.3)
 save_plot("asic_pareto_candidates.png")
@@ -219,8 +224,74 @@ for r in pareto_rows:
         f"{r['architecture']}-{r['config']}: "
         f"MAE={r['mae']:.6f}, "
         f"Area={r['asic_cell_area_um2']:.2f} um2, "
-        f"Fmax={r['asic_reg_reg_fmax_est_mhz']:.2f} MHz"
+        f"Fmax={r['asic_reg_reg_fmax_est_mhz']:.2f} MHz, "
+        f"Power={r['asic_total_power_mw']:.6f} mW"
     )
 
 print(f"\nPareto candidates: {len(pareto_rows)}/15")
 print("PPA PLOTS AND PARETO: PASS")
+
+
+# 7. ASIC power vs input bit-width
+plt.figure(figsize=(7, 5))
+
+for arch in ARCHS:
+    data = get_rows(arch)
+
+    plt.plot(
+        [int(r["input_width"]) for r in data],
+        [r["asic_total_power_mw"] for r in data],
+        marker=MARKERS[arch],
+        label=arch
+    )
+
+plt.xlabel("Input width (bits)")
+plt.ylabel("Estimated total power (mW)")
+plt.title("ASIC Power vs Input Bit-width at 50 MHz")
+plt.legend()
+plt.grid(alpha=0.3)
+save_plot("asic_power_vs_bitwidth.png")
+
+
+# 8. ASIC power vs numerical error
+plt.figure(figsize=(7, 5))
+
+for arch in ARCHS:
+    data = get_rows(arch)
+
+    plt.plot(
+        [r["asic_total_power_mw"] for r in data],
+        [r["mae"] for r in data],
+        marker=MARKERS[arch],
+        label=arch
+    )
+
+plt.xlabel("Estimated total power (mW)")
+plt.ylabel("MAE")
+plt.title("ASIC Power vs Accuracy")
+plt.legend()
+plt.grid(alpha=0.3)
+save_plot("asic_power_vs_mae.png")
+
+
+# 9. ASIC power vs area
+plt.figure(figsize=(7, 5))
+
+for arch in ARCHS:
+    data = get_rows(arch)
+
+    plt.plot(
+        [r["asic_cell_area_um2"] for r in data],
+        [r["asic_total_power_mw"] for r in data],
+        marker=MARKERS[arch],
+        label=arch
+    )
+
+plt.xlabel("ASIC standard-cell area (um2)")
+plt.ylabel("Estimated total power (mW)")
+plt.title("ASIC Area vs Power at 50 MHz")
+plt.legend()
+plt.grid(alpha=0.3)
+save_plot("asic_power_vs_area.png")
+
+print("ASIC POWER PLOTS: PASS")

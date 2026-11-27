@@ -111,6 +111,24 @@ def main():
     if len(asic) != 15 or len(fpga) != 15:
         raise RuntimeError("Expected 15 ASIC and FPGA rows")
 
+    power_rows = read_csv(
+        ASIC / "power" / "asic_power_summary.csv"
+    )
+
+    power = {
+        (row["architecture"], row["config"]): row
+        for row in power_rows
+    }
+
+    expected_keys = {
+        (arch, cfg)
+        for arch in ARCHS
+        for cfg in CONFIGS
+    }
+
+    if len(power_rows) != 15 or set(power) != expected_keys:
+        raise RuntimeError("Invalid ASIC power configurations")
+
     output_rows = []
 
     for arch in ARCHS:
@@ -167,6 +185,28 @@ def main():
             }
 
             row.update(timing)
+
+            pw = power[(arch, cfg)]
+
+            row.update({
+                "asic_internal_power_mw":
+                    float(pw["internal_power_mw"]),
+                "asic_switching_power_mw":
+                    float(pw["switching_power_mw"]),
+                "asic_leakage_power_mw":
+                    float(pw["leakage_power_mw"]),
+                "asic_total_power_mw":
+                    float(pw["total_power_mw"]),
+                "asic_power_clock_mhz":
+                    float(pw["clock_mhz"]),
+                "asic_power_input_activity":
+                    float(pw["input_activity"]),
+                "asic_power_input_duty":
+                    float(pw["input_duty"]),
+                "asic_power_method":
+                    pw["method"],
+            })
+
             output_rows.append(row)
 
     output = RESULTS / "ppa_summary.csv"

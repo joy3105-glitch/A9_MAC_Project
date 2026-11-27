@@ -157,6 +157,40 @@ không phải signoff Fmax sau physical implementation.
 ASIC area là tổng diện tích standard cells,
 không phải diện tích physical core.
 
+### ASIC Power estimation
+
+Công suất ASIC được ước tính bằng OpenSTA trên
+mapped netlist với SKY130 HD Liberty.
+
+Điều kiện khảo sát:
+- Clock frequency: 50 MHz.
+- Data input activity: 0.1.
+- Data input duty: 0.5.
+- Method: vectorless pre-layout power estimation.
+
+Các chỉ số:
+- Internal power.
+- Switching power.
+- Leakage power.
+- Total power.
+
+Kết quả: 15/15 cấu hình đã tạo power report thành công.
+
+| Config | P0 (mW) | P1 (mW) | P2 (mW) |
+|---|---:|---:|---:|
+| C1 | 0.387284 | 0.163406 | 0.172210 |
+| C2 | 0.938721 | 0.356497 | 0.281139 |
+| C3 | 1.278021 | 0.548259 | 0.419408 |
+| C4 | 1.813159 | 0.669364 | 0.554990 |
+| C5 | 2.733248 | 1.077934 | 0.836512 |
+
+Nguồn dữ liệu:
+- results/asic_sky130_filtered/power/asic_power_summary.csv
+- results/asic_sky130_filtered/power/
+
+Đây là công suất ước tính trước physical implementation,
+không phải công suất đo thực tế.
+
 ## 10. PPA/Fmax/latency comparison
 
 Bảng tổng hợp 15 cấu hình:
@@ -168,13 +202,21 @@ results/ppa_plots/
 Phân tích Pareto:
 results/asic_pareto_summary.csv
 
-ASIC Pareto sử dụng ba tiêu chí:
+ASIC Pareto sử dụng bốn tiêu chí:
 - Minimize MAE.
 - Minimize standard-cell area.
+- Minimize estimated total power.
 - Maximize estimated register-to-register Fmax.
 
-Kết quả hiện tại: 14/15 cấu hình không bị chi phối
-theo ba tiêu chí đã chọn.
+Kết quả hiện tại: 15/15 cấu hình không bị chi phối
+theo bốn tiêu chí đã chọn.
+
+Bảng PPA đã tích hợp numerical error, FPGA resources,
+ASIC area, power, timing, latency và initiation interval.
+
+Kết quả Pareto không có nghĩa mọi cấu hình đều tốt
+như nhau. Việc lựa chọn phụ thuộc mục tiêu và ràng buộc
+của ứng dụng.
 
 ## 11. Optimization recommendation
 
@@ -185,7 +227,27 @@ Các ứng viên dựa trên kết quả thực nghiệm:
 - P0-C3: ưu tiên ASIC timing khi MAE <= 0.02.
 - P1-C3: ưu tiên FPGA Fmax khi MAE <= 0.02.
 
+Khảo sát bổ sung với ngưỡng minh họa MAE <= 0.02:
+
+| Objective | Candidate | Result |
+|---|---|---:|
+| Minimum ASIC area | P1-C3 | 6877.85 um2 |
+| Minimum ASIC power | P2-C3 | 0.419408 mW |
+| Maximum ASIC estimated Fmax | P0-C3 | 82.30 MHz |
+| Maximum FPGA Fmax | P1-C3 | 36.75 MHz |
+
+Kết quả lựa chọn:
+- results/optimization_recommendation.csv
+
+P1-C3 là ứng viên cân bằng sơ bộ giữa độ chính xác,
+diện tích ASIC và hiệu năng FPGA.
+
+Ngưỡng MAE <= 0.02 là giả định phục vụ phân tích,
+không phải ràng buộc chính thức của đề tài.
+
 Không có một kiến trúc tối ưu tuyệt đối cho mọi tiêu chí.
+Phương án cuối cùng sẽ được xem xét sau khi trao đổi
+với giảng viên hướng dẫn.
 
 ## 12. Cấu trúc dự án
 
@@ -213,6 +275,14 @@ Khảo sát bit-width:
 
     python3 python/bitwidth_sweep.py
 
+Ước tính ASIC Power:
+
+    bash scripts/run_asic_power_sweep.sh
+
+Tổng hợp Power:
+
+    python3 python/summarize_asic_power.py
+
 Tổng hợp PPA:
 
     python3 python/build_ppa_summary.py
@@ -220,6 +290,10 @@ Tổng hợp PPA:
 Tạo biểu đồ và Pareto:
 
     python3 python/plot_ppa_pareto.py
+
+Khảo sát lựa chọn cấu hình:
+
+    python3 python/select_optimal_config.py
 
 Các flow FPGA/ASIC được thực hiện bằng script trong
 scripts/ và yêu cầu cấu hình môi trường tương ứng.
@@ -229,6 +303,11 @@ scripts/ và yêu cầu cấu hình môi trường tương ứng.
 - Numerical error phụ thuộc bộ dữ liệu kiểm thử.
 - FPGA và ASIC sử dụng các flow timing khác nhau.
 - ASIC chưa được đánh giá bằng physical signoff.
+- ASIC Power sử dụng switching activity giả định.
+- Chưa đánh giá FPGA Power.
+- Chưa khảo sát riêng hardware cost của từng chế độ
+  rounding, truncation và saturation.
+- P1-C3 chưa đạt timing 50 MHz trên FPGA iCE40.
 - Pareto phụ thuộc tập tiêu chí tối ưu.
 - MAC array hoặc dot-product engine là hướng mở rộng,
   không thuộc yêu cầu bắt buộc của đề tài.
@@ -241,9 +320,17 @@ scripts/ và yêu cầu cấu hình môi trường tương ứng.
 - Verification vectors và equivalence.
 - Numerical error analysis.
 - FPGA/ASIC synthesis.
+- ASIC static timing analysis.
+- ASIC gate-level verification.
+- ASIC vectorless power estimation.
 - PPA/Fmax/latency comparison.
+- Pareto analysis với bốn tiêu chí.
 - Optimization recommendation sơ bộ.
 
 Các kết quả trên phản ánh tiến độ thực nghiệm hiện tại, chưa phải kết luận tối ưu cuối cùng của đồ án.
 
-Các bước nghiên cứu và đánh giá tiếp theo sẽ được thực hiện theo yêu cầu đề tài A9.
+Trạng thái hiện tại: đã thực hiện các thực nghiệm chính,
+đang đánh giá kết quả và trao đổi với giảng viên hướng dẫn.
+
+Phạm vi nghiên cứu bổ sung, tiêu chí tối ưu và kết luận
+cuối cùng sẽ được xác định sau khi có ý kiến hướng dẫn.
