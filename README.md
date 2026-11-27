@@ -39,12 +39,6 @@ Xây MAC datapath và khảo sát ảnh hưởng của bit-width/pipeline đến
 
 ## 3. Đặc tả số học fixed-point
 
-Phép toán Multiply-Accumulate:
-
-$$
-S_n = S_{n-1} + A_n B_n
-$$
-
 Cấu hình tham chiếu ban đầu:
 
 | Thành phần | Width (bit) | Fixed-point format |
